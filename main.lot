@@ -1,0 +1,44 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Limitations of Existing Washing Machines}}{9}{table.caption.12}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Advantages of Proposed System}}{13}{table.caption.15}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Mobile Application Screens}}{16}{table.caption.16}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Hardware Interfaces}}{17}{table.caption.17}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Software Interfaces}}{17}{table.caption.18}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Non-Functional Requirements}}{19}{table.3.6}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces DFD Level 1 Process Descriptions}}{23}{table.caption.22}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Parameter Selection Rules for Mixed Loads}}{26}{table.caption.25}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Edge Case Handling Strategies}}{27}{table.caption.26}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Hardware Control Mapping}}{30}{table.caption.31}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Calibration Data}}{38}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Linear Regression Coefficients}}{40}{table.caption.34}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Relay Functions}}{53}{table.caption.42}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Arduino Pin Mapping}}{55}{table.caption.45}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Implementation Summary}}{57}{table.caption.46}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces Development Environment}}{58}{table.caption.47}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Programming Languages}}{58}{table.caption.48}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Python Backend Dependencies}}{62}{table.caption.49}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Arduino Libraries}}{62}{table.caption.50}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces React Native Dependencies}}{62}{table.caption.51}%
+\contentsline {table}{\numberline {6.6}{\ignorespaces Testing Tools}}{63}{table.caption.52}%
+\contentsline {table}{\numberline {6.7}{\ignorespaces Version Control}}{63}{table.caption.53}%
+\contentsline {table}{\numberline {6.8}{\ignorespaces Deployment and Hosting}}{63}{table.caption.54}%
+\contentsline {table}{\numberline {6.9}{\ignorespaces Security Measures}}{63}{table.caption.55}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces API Unit Tests}}{64}{table.caption.56}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Arduino Unit Tests}}{64}{table.caption.57}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Integration Tests}}{64}{table.caption.58}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces API Response Times}}{65}{table.caption.60}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Hardware Response Times}}{65}{table.caption.61}%
+\contentsline {table}{\numberline {7.6}{\ignorespaces Load Test Results}}{65}{table.caption.62}%
+\contentsline {table}{\numberline {7.7}{\ignorespaces Usability Task Completion}}{66}{table.caption.63}%
+\contentsline {table}{\numberline {7.8}{\ignorespaces Critical Bugs Fixed}}{66}{table.caption.64}%
+\contentsline {table}{\numberline {7.9}{\ignorespaces Improvements Implemented}}{67}{table.caption.65}%
+\contentsline {table}{\numberline {7.10}{\ignorespaces Testing Summary}}{67}{table.caption.66}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {9.1}{\ignorespaces Key Achievements}}{70}{table.caption.67}%

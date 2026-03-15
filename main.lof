@@ -1,0 +1,32 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Proposed System Architecture Block Diagram}}{10}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Complete Project Hardware Setup}}{12}{figure.caption.14}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces High-Level ``Eyes and Brain'' System Architecture}}{21}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces DFD Level 0 – System Context Diagram}}{22}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces DFD Level 1 – Detailed Data Flow}}{22}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces UML Use Case Diagram}}{23}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Mixed Load Safety Decision Flow}}{25}{figure.caption.24}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Self-Learning Feedback Mechanism}}{27}{figure.caption.27}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Request Management Architecture}}{28}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Terminal Output – Successful End-to-End Test}}{29}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Software-to-Hardware Parameter Mapping}}{30}{figure.caption.30}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Arduino Firmware in Arduino IDE}}{33}{figure.caption.32}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Volume vs Time Linear Regression Graph}}{40}{figure.caption.33}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces FastAPI 1 Implementation}}{41}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces FastAPI 1 Documentation at \url {http://localhost:8000/docs}}}{44}{figure.caption.36}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces FastAPI 2 Documentation at \url {http://localhost:8001/docs}}}{45}{figure.caption.37}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Example Prompt Screenshot}}{49}{figure.caption.38}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Example JSON Response Screenshot}}{51}{figure.caption.39}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Arduino WiFi R4 Connected to Washing Machine Control Panel}}{52}{figure.caption.40}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces 3-Channel Relay Module for Motor and Water Control}}{53}{figure.caption.41}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces 5V DC Pump with TAS122 Transistor Control}}{54}{figure.caption.43}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces 240V AC Solenoid Water Inlet Valve}}{55}{figure.caption.44}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Successful End-to-End Integration Test Output}}{65}{figure.caption.59}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }

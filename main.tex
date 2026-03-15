@@ -166,7 +166,9 @@
 \fancypagestyle{plain}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{Division of Computer Science}
+    \fancyfoot[R]{Page \thepage}
 }
 \fancypagestyle{reportstyle}{
     \fancyhf{}
@@ -180,16 +182,13 @@
 \fancypagestyle{footeronly}{
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
-    \fancyfoot[C]{\thepage}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{Division of Computer Science}
+    \fancyfoot[R]{Page \thepage}
 }
 \pagestyle{reportstyle}
 
-% Ensure chapter pages use footeronly style
-\let\oldchapter\chapter
-\renewcommand{\chapter}{
-    \thispagestyle{footeronly}
-    \oldchapter
-}
+% Chapter pages automatically use the plain style defined above
 
 % ============ TOLERANCE SETTINGS ============
 \setlength{\emergencystretch}{3em}
