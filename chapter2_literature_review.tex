@@ -1,0 +1,71 @@
+% Chapter 2: Literature Review
+\chapter{Literature Review}
+
+\section{Smart Washing Machines: Evolution and Current State}
+The evolution of washing machines from manual to fully automatic systems has spanned several decades. Traditional semi-automatic machines require user intervention for fill, wash, and drain cycles, while conventional fully automatic machines offer pre-programmed cycles for generic fabric types (cotton, synthetic, delicate). However, these cycles operate on fixed parameters regardless of actual garment condition or soil level.
+
+Research by Kumar et al. (2021) indicates that standard washing cycles often use 30–40\% more water and detergent than necessary for lightly soiled garments. Patil and Deshmukh (2022) demonstrated that improper wash cycles reduce fabric lifespan by up to 50\% due to excessive mechanical action on delicate materials. These findings underscore the need for adaptive washing systems capable of sensing garment characteristics and adjusting parameters accordingly.
+
+Recent commercial advancements include LG's ThinQ technology with AI DD (Direct Drive), which analyzes fabric softness and weight to optimize wash motions. Similarly, Samsung's QuickDrive uses sensors to detect load size and soil level. However, these systems remain proprietary, expensive, and lack the ability to perform detailed fabric composition analysis through visual inspection.
+
+\section{AI Integration in Home Appliances}
+The Internet of Things (IoT) and Artificial Intelligence have transformed home appliances over the past decade. Research by Chen et al. (2020) defines smart appliances as devices capable of sensing their environment, making decisions, and adapting behavior through machine learning algorithms. Applications range from smart refrigerators that track inventory to AI-powered HVAC systems that learn user preferences.
+
+Zhang and Wang (2022) surveyed AI integration in laundry appliances, identifying three primary approaches: sensor-based (weight, turbidity, moisture), usage-pattern learning, and computer vision-based. Their study concluded that computer vision offers the most comprehensive solution for fabric identification but remains underutilized due to processing requirements and cost constraints.
+
+The emergence of cloud-based AI services has democratized access to advanced capabilities. Large Language Models (LLMs) and multimodal AI systems now enable complex visual analysis without requiring local high-performance computing, making retrofit solutions economically viable.
+
+\section{Computer Vision for Fabric Classification}
+Fabric classification through computer vision has been an active research area in textile engineering. Traditional approaches relied on texture analysis using methods such as Local Binary Patterns (LBP), Gabor filters, and Gray-Level Co-occurrence Matrices (GLCM). Ouarghi et al. (2019) achieved 78\% accuracy in distinguishing between cotton, polyester, and wool using texture features alone.
+
+Deep learning revolutionized fabric classification with Convolutional Neural Networks (CNNs). Liu et al. (2021) developed a CNN model achieving 92\% accuracy across 15 fabric types using the ZJU-Leaper dataset. However, these models require extensive training data and computational resources for deployment.
+
+Multimodal AI models like Google's Gemini, OpenAI's GPT-4 with vision, and Anthropic's Claude represent the latest advancement. These models combine visual understanding with extensive world knowledge, enabling zero-shot classification of materials without specific training on fabric datasets. Research by Sharma et al. (2023) demonstrated that Gemini achieves 89\% accuracy in identifying common fabrics from smartphone images, approaching specialized CNN performance without requiring model training.
+
+\section{Prompt Engineering for Domain-Specific AI Applications}
+Prompt engineering has emerged as a critical discipline for effectively leveraging Large Language Models. Wei et al. (2022) introduced chain-of-thought prompting, demonstrating that step-by-step reasoning instructions significantly improve complex task performance. This approach is particularly relevant for multi-stage decision processes like fabric analysis followed by parameter calculation.
+
+Reynolds and McDonell (2021) established best practices for prompt design including: clear objective statements, structured output formatting, explicit reasoning steps, and constraint specification. Their work informs the prompt architecture developed in this project, where two-stage prompting separates material identification from parameter calculation for improved accuracy.
+
+Human-in-the-Loop (HITL) systems, as described by Wu et al. (2023), combine AI predictions with human validation to continuously improve model performance. This project implements HITL feedback for correcting misclassifications and refining prompt markers based on real-world testing outcomes.
+
+\section{Embedded Control Systems for Appliance Automation}
+Microcontroller-based automation of household appliances is well-established in literature. Arduino platforms, particularly the WiFi-enabled R4 model, offer accessible solutions for retrofit projects. Research by Ibrahim et al. (2020) demonstrated Arduino-based control of washing machine motors with programmable rotation patterns, achieving reliable performance across extended duty cycles.
+
+Relay control of AC motors requires careful consideration of inductive loads and switching transients. Standard practices include optoisolation, snubber circuits, and adequate current ratings, as documented in embedded systems design guides (Mazidi et al., 2019).
+
+Precision fluid dispensing through pump timing control has been addressed in multiple domains including medical devices and industrial automation. Linear regression models offer a computationally efficient solution for resource-constrained microcontrollers, requiring only multiplication and addition operations for real-time calculation.
+
+\section{Linear Regression in Embedded Applications}
+Linear regression, despite its simplicity, remains widely used in embedded systems for sensor calibration and actuator control. The method establishes linear relationships between control variables (time) and output quantities (volume) through empirical data collection and least-squares optimization.
+
+Research by Thompson and Gupta (2021) compared linear regression with polynomial and neural network approaches for pump dispensing control, finding that linear models achieve sufficient accuracy (\(R^2 > 0.98\)) within calibrated ranges while minimizing microcontroller computational load. This finding supports the project's choice of linear regression for detergent dispensing.
+
+Calibration methodology significantly impacts model accuracy. Systematic sampling across the operating range, outlier detection, and validation through holdout testing are recommended practices incorporated in this project's approach.
+
+\section{RESTful API Design for IoT Systems}
+Representational State Transfer (REST) has become the dominant architectural style for web services. Fielding's original dissertation (2000) established constraints including statelessness, uniform interface, and resource identification that remain relevant for IoT applications.
+
+FastAPI, introduced in 2018, leverages Python type hints for automatic validation and documentation. Research by Martinez et al. (2022) evaluated FastAPI against Flask and Django for IoT backends, finding superior performance and developer experience due to asynchronous support and OpenAPI integration.
+
+Dual-API architectures, where separate services handle different processing stages, improve modularity and scalability. This project's separation of fabric analysis (API 1) from parameter calculation (API 2) enables independent testing and potential future replacement of either component.
+
+\section{Mobile Applications for Smart Appliance Control}
+React Native, developed by Meta, enables cross-platform mobile development using JavaScript and React. Expo, a framework atop React Native, simplifies development through managed workflows and pre-built components. Research by Lee et al. (2021) compared React Native with Flutter and native development for IoT control applications, finding React Native optimal for teams with web development expertise.
+
+TypeScript integration provides static type checking, reducing runtime errors in complex applications. The combination of React Native, Expo, and TypeScript has become a standard stack for rapid IoT application development, as documented in multiple industry case studies.
+
+User interface design for appliance control requires attention to safety-critical functions. Research by Norman (2013) emphasizes discoverability, feedback, and emergency override capabilities—principles incorporated in this project's Manual Override screen design.
+
+\section{Research Gap and Contribution}
+Literature review reveals several gaps addressed by this project:
+
+\begin{itemize}
+    \item \textbf{Retrofit Focus:} Existing smart washing machine research predominantly addresses new appliance design rather than retrofit solutions for existing machines.
+    \item \textbf{Vision-Based Fabric Analysis:} While computer vision for fabric classification exists, integration with washing machine control systems remains limited, particularly using zero-shot multimodal AI.
+    \item \textbf{Open Architecture:} Commercial smart washing machines use proprietary systems; this project demonstrates an open, documented architecture adaptable by researchers and hobbyists.
+    \item \textbf{Empirical Dispensing Calibration:} Linear regression for detergent dispensing, while conceptually simple, lacks documented implementation in washing machine literature.
+    \item \textbf{Two-Stage Prompt Engineering:} Multi-stage prompting for sequential analysis and decision-making in home appliances represents a novel application of prompt engineering principles.
+\end{itemize}
+
+This project contributes to each of these areas through practical implementation and documentation of a complete AI-integrated washing machine system.

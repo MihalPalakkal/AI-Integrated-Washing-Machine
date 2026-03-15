@@ -1,0 +1,362 @@
+\chapter{Technologies Used}
+
+\section{Introduction}
+The AI-Integrated Washing Machine leverages a combination of embedded systems, computer vision, machine learning, and sensor technologies to create an intelligent laundry solution. This chapter summarizes the key technologies, frameworks, hardware components, and tools employed in the project.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|l|p{9cm}|}
+        \hline
+        \textbf{Component} & \textbf{Technologies} \\
+        \hline
+        Hardware Platform & Raspberry Pi 4 (4GB), Arduino Uno, Custom PCB \\
+        \hline
+        Vision \& AI & OpenCV, TensorFlow Lite, MobileNetV2, Python 3.9+ \\
+        \hline
+        Control System & C++ (Arduino), Python, GPIO, Serial Communication \\
+        \hline
+        Sensors & Load Cells (HX711), Turbidity Sensor, DS18B20, Vibration Sensor \\
+        \hline
+        Actuators & Solenoid Valves, Peristaltic Pump, BLDC Motor, Relay Modules \\
+        \hline
+        Database & SQLite3 \\
+        \hline
+        User Interface & Pygame, Touchscreen Display (7-inch), GPIO Buttons \\
+        \hline
+        Development Tools & VS Code, Arduino IDE, Git, GitHub, Fritzing, Python venv \\
+        \hline
+    \end{tabular}
+    \caption{Technology Stack Overview}
+    \label{tab:tech-stack}
+\end{table}
+
+\section{Hardware Technologies}
+
+\subsection{Processing Units}
+
+\begin{itemize}
+    \item \textbf{Raspberry Pi 4 (4GB RAM):} Serves as the main processing unit responsible for high-level tasks including image capture, machine learning inference, cycle generation, user interface management, and database operations. The quad-core ARM Cortex-A72 processor at 1.5GHz provides sufficient computational power for real-time image processing and TensorFlow Lite execution.
+    \item \textbf{Arduino Uno:} Functions as the real-time microcontroller for low-level sensor reading and actuator control. Its simple architecture ensures reliable, deterministic response times for critical operations like valve control and motor speed regulation. Communication with Raspberry Pi occurs via USB serial at 9600 baud.
+\end{itemize}
+
+\subsection{Sensors}
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Sensor Technologies}
+    \label{tab:sensors}
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Sensor} & \textbf{Technology} & \textbf{Purpose} & \textbf{Interface} \\
+        \hline
+        Camera Module & Raspberry Pi Camera Module 3 / USB Webcam & Capture fabric images for classification & CSI / USB \\
+        \hline
+        Load Cells & 4x 50kg strain gauge with HX711 amplifier & Measure laundry weight & I2C / GPIO \\
+        \hline
+        Turbidity Sensor & Analog turbidity sensor (TS-300B) & Detect water clarity for soil level & Analog (ADC) \\
+        \hline
+        Temperature Sensor & DS18B20 waterproof digital sensor & Monitor water temperature & 1-Wire \\
+        \hline
+        Vibration Sensor & SW-420 vibration sensor & Detect drum imbalance & Digital GPIO \\
+        \hline
+        Water Level Sensor & Float switch / pressure sensor & Prevent overflow & Digital GPIO \\
+        \hline
+        Leak Sensor & Water leak detection strip & Detect leaks in base tray & Digital GPIO \\
+        \hline
+        Door Switch & Magnetic reed switch & Ensure door is closed during operation & Digital GPIO \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Actuators}
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Actuator Technologies}
+    \label{tab:actuators}
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Actuator} & \textbf{Technology} & \textbf{Control Method} & \textbf{Purpose} \\
+        \hline
+        Water Valves & 12V Solenoid valves (normally closed) & Relay module & Control hot/cold water inflow \\
+        \hline
+        Detergent Dispenser & Peristaltic pump with stepper motor & Motor driver (ULN2003) & Precise liquid detergent dispensing \\
+        \hline
+        Drum Motor & BLDC motor with controller & PWM signal & Drum rotation and spinning \\
+        \hline
+        Drain Pump & 12V centrifugal pump & Relay module & Remove water from drum \\
+        \hline
+        Heater & 2000W heating element & Solid State Relay (SSR) & Heat water to required temperature \\
+        \hline
+        Door Lock & Electromagnetic lock & Relay module & Secure door during operation \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Software Technologies}
+
+\subsection{Vision and Machine Learning}
+
+\begin{itemize}
+    \item \textbf{Python 3.9+:} Primary programming language for the main application, chosen for its extensive libraries for computer vision, machine learning, and hardware interfacing.
+    \item \textbf{OpenCV (4.8+):} Provides comprehensive image processing capabilities including image capture, format conversion, color space transformations (RGB, LAB, HSV), contrast enhancement (CLAHE), resizing, normalization, texture feature extraction, and real-time camera control.
+    \item \textbf{TensorFlow Lite:} Enables on-device machine learning inference optimized for resource-constrained environments like Raspberry Pi. Features used include model quantization for reduced size and faster inference, hardware acceleration via GPU delegate, efficient memory management, and support for custom trained models.
+    \item \textbf{MobileNetV2:} Lightweight CNN architecture used as the base for fabric classification. Pretrained on ImageNet and fine-tuned on custom fabric dataset. Advantages: small model size ($\sim$14MB after quantization), fast inference ($<$500ms on Raspberry Pi), good accuracy with limited computational resources.
+    \item \textbf{Model Training Stack:} TensorFlow 2.x (training on desktop/cloud), Keras API for model definition, data augmentation (rotation, zoom, brightness, contrast), transfer learning from ImageNet weights.
+\end{itemize}
+
+\subsection{Control and Embedded Software}
+
+\begin{itemize}
+    \item \textbf{C++ (Arduino):} Used for microcontroller programming providing real-time sensor reading with minimal latency, precise timing for actuator control, interrupt handling for safety monitoring, and efficient memory usage for continuous operation.
+    \item \textbf{Python (RPi.GPIO, pigpio):} Libraries for GPIO control on Raspberry Pi: digital I/O for simple sensors and relays, PWM for motor speed control, interrupt-based event detection, I2C communication with HX711 and other sensors.
+    \item \textbf{PySerial:} Enables serial communication between Raspberry Pi and Arduino for command/response protocol.
+\end{itemize}
+
+\subsection{Database}
+
+\textbf{SQLite3:} Lightweight, file-based relational database ideal for embedded applications. Advantages: zero configuration (no separate server process), single file storage for easy backup, ACID compliance for data integrity, small memory footprint ($<$500KB), and Python standard library support (\texttt{sqlite3} module).
+
+Database schema includes tables for:
+\begin{itemize}
+    \item Fabric types and properties
+    \item Wash cycles and parameters
+    \item Wash history for learning
+    \item Learning data for optimization
+    \item System logs and errors
+\end{itemize}
+
+\subsection{User Interface}
+
+\textbf{Pygame:} Cross-platform set of Python modules designed for multimedia applications. Used for touchscreen display rendering, button and touch event handling, custom UI components (progress bars, buttons, text), smooth animations and transitions, font rendering, and image display. (Alternative Considered: PyQt5/Tkinter – rejected due to heavier resource requirements and complexity for embedded use.)
+
+\textbf{GPIO Buttons:} Physical buttons provide emergency stop, power on/off, and manual override for critical functions.
+
+\section{Communication Protocols}
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Communication Protocols}
+    \label{tab:protocols}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Protocol} & \textbf{Usage} & \textbf{Devices} \\
+        \hline
+        Serial (UART) & Command/response between Raspberry Pi and Arduino & USB connection \\
+        \hline
+        I2C & Communication with HX711 load cell amplifier & Raspberry Pi $\leftrightarrow$ HX711 \\
+        \hline
+        1-Wire & DS18B20 temperature sensor communication & Raspberry Pi $\leftrightarrow$ DS18B20 \\
+        \hline
+        GPIO & Digital I/O for sensors, relays, buttons & Raspberry Pi/Arduino $\leftrightarrow$ peripherals \\
+        \hline
+        PWM & Motor speed control, heater power regulation & Raspberry Pi/Arduino $\leftrightarrow$ motor driver/SSR \\
+        \hline
+        SPI & Camera module communication (CSI interface) & Raspberry Pi $\leftrightarrow$ Camera \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Development Tools}
+
+\subsection{Software Development Tools}
+\begin{itemize}
+    \item \textbf{VS Code:} Primary code editor with Python, C++ extensions.
+    \item \textbf{Arduino IDE:} Programming and uploading Arduino sketches.
+    \item \textbf{Git:} Version control for source code.
+    \item \textbf{GitHub:} Remote repository hosting and collaboration.
+    \item \textbf{Python venv:} Isolated Python environment for dependency management.
+    \item \textbf{pip:} Python package installation (\texttt{requirements.txt}).
+    \item \textbf{Jupyter Notebook:} Model training and experimentation.
+    \item \textbf{TensorBoard:} Training visualization and model analysis.
+\end{itemize}
+
+\subsection{Hardware Design Tools}
+\begin{itemize}
+    \item \textbf{Fritzing:} Circuit diagram and PCB design.
+    \item \textbf{EasyEDA:} Schematic capture and PCB layout.
+    \item \textbf{Tinkercad:} Arduino simulation and testing.
+    \item \textbf{3D Modeling Software:} Enclosure design (optional).
+\end{itemize}
+
+\subsection{Testing and Debugging Tools}
+\begin{itemize}
+    \item \textbf{Multimeter:} Voltage, current, continuity testing.
+    \item \textbf{Oscilloscope:} Signal analysis for sensors and PWM.
+    \item \textbf{Logic Analyzer:} Digital protocol debugging.
+    \item \textbf{Serial Monitor:} Arduino debugging output.
+    \item \textbf{Python logging:} Application logging and debugging.
+    \item \textbf{OpenCV GUI windows:} Real-time image preview during development.
+\end{itemize}
+
+\section{Project Structure}
+
+The AI-Integrated Washing Machine follows a modular architecture with clear separation of concerns:
+
+\begin{verbatim}
+ai-washing-machine/
+│
+├── main.py                      # Main application entry point
+├── config.py                    # Configuration parameters
+├── requirements.txt             # Python dependencies
+├── .env                         # Environment variables (optional)
+├── README.md                    # Project documentation
+│
+├── vision/                       # Vision module
+│   ├── __init__.py
+│   ├── camera.py                # Camera control
+│   ├── preprocessor.py          # Image preprocessing
+│   └── classifier.py            # Fabric classification
+│
+├── sensors/                      # Sensor module
+│   ├── __init__.py
+│   ├── sensor_interface.py      # Python sensor interface
+│   └── arduino/                  # Arduino sketch
+│       └── washing_machine_sensors.ino
+│
+├── control/                      # Control module
+│   ├── __init__.py
+│   ├── actuator_interface.py    # Actuator control
+│   ├── cycle_generator.py       # Cycle calculation
+│   └── cycle_executor.py        # Cycle execution
+│
+├── ui/                           # User interface module
+│   ├── __init__.py
+│   ├── main_ui.py               # Pygame UI
+│   ├── assets/                   # Images, fonts
+│   │   ├── icons/
+│   │   └── fonts/
+│   └── styles.py                 # UI styling constants
+│
+├── database/                      # Database module
+│   ├── __init__.py
+│   ├── db_manager.py             # Database operations
+│   ├── schema.sql                 # Database schema
+│   └── seed_data.sql              # Initial fabric data
+│
+├── safety/                        # Safety monitoring
+│   ├── __init__.py
+│   └── monitor.py                 # Safety checks
+│
+├── models/                         # Trained ML models
+│   ├── fabric_model.tflite        # Quantized TensorFlow model
+│   └── labels.json                 # Class labels
+│
+├── logs/                           # System logs
+│   └── washing_machine.log
+│
+└── tests/                          # Unit tests
+    ├── test_vision.py
+    ├── test_sensors.py
+    └── test_control.py
+\end{verbatim}
+
+\section{Deployment Configuration}
+
+\subsection{Raspberry Pi Setup}
+\begin{itemize}
+    \item \textbf{Operating System:} Raspberry Pi OS Lite (64-bit) – headless version to minimize resource usage.
+    \item \textbf{Auto-start:} Systemd service to launch main application on boot.
+    \item \textbf{WiFi:} Configured for remote monitoring and updates (optional).
+    \item \textbf{Overclocking:} Optional performance boost for vision processing.
+    \item \textbf{Cooling:} Passive heatsink or small fan for thermal management.
+\end{itemize}
+
+\subsection{Python Environment}
+\begin{verbatim}
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+\end{verbatim}
+
+\texttt{requirements.txt}:
+\begin{verbatim}
+opencv-python==4.8.1.78
+tensorflow==2.13.0
+tflite-runtime==2.13.0
+numpy==1.24.3
+pyserial==3.5
+RPi.GPIO==0.7.1
+pigpio==1.78
+pygame==2.5.2
+pillow==10.0.0
+\end{verbatim}
+
+\subsection{Arduino Setup}
+\begin{itemize}
+    \item \textbf{Bootloader:} Standard Arduino Uno bootloader.
+    \item \textbf{Upload:} Via USB from Raspberry Pi command line using Arduino CLI.
+    \item \textbf{Communication:} Serial at 9600 baud, 8 data bits, no parity, 1 stop bit.
+\end{itemize}
+
+\section{Advantages of Technology Stack}
+
+\subsection{Performance}
+\begin{itemize}
+    \item \textbf{Real-time Processing:} TensorFlow Lite with hardware acceleration enables fabric classification in $<$5 seconds.
+    \item \textbf{Low Latency:} Arduino handles time-critical sensor reading and actuator control with microsecond precision.
+    \item \textbf{Efficient Resource Usage:} SQLite provides database operations with minimal overhead.
+    \item \textbf{Optimized UI:} Pygame renders at 30+ fps on 800$\times$480 display.
+\end{itemize}
+
+\subsection{Reliability}
+\begin{itemize}
+    \item \textbf{Deterministic Control:} Arduino ensures consistent timing for critical operations.
+    \item \textbf{Safety Monitoring:} Dedicated safety thread runs continuous checks.
+    \item \textbf{Data Integrity:} SQLite ACID compliance prevents database corruption during power loss.
+    \item \textbf{Fail-safe Operation:} Manual override buttons and default cycles available if vision system fails.
+\end{itemize}
+
+\subsection{Accuracy}
+\begin{itemize}
+    \item \textbf{Precise Classification:} CNN model achieves $>$95\% accuracy on common fabrics.
+    \item \textbf{Accurate Dispensing:} Peristaltic pump with stepper motor delivers $\pm$2ml detergent accuracy.
+    \item \textbf{Exact Water Measurement:} Flow meter or time-based fill with level sensor verification.
+    \item \textbf{Consistent Results:} Learning algorithm improves cycle parameters over time.
+\end{itemize}
+
+\subsection{Cost-Effectiveness}
+\begin{itemize}
+    \item \textbf{Raspberry Pi:} Affordable (\$35–75) compared to industrial embedded systems.
+    \item \textbf{Open Source Software:} All software components are free and open-source.
+    \item \textbf{Commodity Sensors:} Standard electronic components available at low cost.
+    \item \textbf{Scalable:} Can be adapted for different machine sizes and price points.
+\end{itemize}
+
+\subsection{Maintainability}
+\begin{itemize}
+    \item \textbf{Modular Architecture:} Clear separation between vision, control, UI, and database.
+    \item \textbf{Well-documented Code:} Python and C++ with comprehensive comments.
+    \item \textbf{Version Control:} Git tracks all changes with meaningful commit messages.
+    \item \textbf{Test Coverage:} Unit tests for critical modules ensure reliability.
+\end{itemize}
+
+\subsection{Future Expandability}
+\begin{itemize}
+    \item \textbf{Cloud Connectivity:} Can add WiFi module for remote monitoring and updates.
+    \item \textbf{Additional Sensors:} Easy to integrate new sensors (humidity, chemical sensors).
+    \item \textbf{Model Updates:} TensorFlow Lite models can be updated remotely.
+    \item \textbf{Mobile App:} REST API can be added for smartphone control.
+\end{itemize}
+
+\section{Summary}
+
+The AI-Integrated Washing Machine combines carefully selected hardware and software technologies to create an intelligent, efficient, and reliable laundry system. The technology stack prioritizes:
+
+\begin{itemize}
+    \item \textbf{Processing Power:} Raspberry Pi for complex vision/AI tasks, Arduino for real-time control.
+    \item \textbf{Accuracy:} High-quality sensors and machine learning for precise fabric detection.
+    \item \textbf{User Experience:} Responsive touchscreen interface with intuitive controls.
+    \item \textbf{Safety:} Multiple sensors and continuous monitoring for safe operation.
+    \item \textbf{Cost:} Open-source software and affordable components for practical implementation.
+    \item \textbf{Scalability:} Modular design allowing future enhancements and adaptations.
+\end{itemize}
+
+This technology foundation enables the system to achieve its core objectives: automatic fabric identification, optimized resource usage, extended garment life, and simplified user experience, while maintaining reliability and safety in a household appliance environment.

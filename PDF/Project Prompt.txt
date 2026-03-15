@@ -1,0 +1,53 @@
+Mini Project
+-------------
+Ai Integrated Washing Machine
+
+We Already have a semi Automatic Washing Machine 
+we have converted it into a fully automated AI Integrated Washing Machine 
+
+We will scan Each Cloth Type Using an App We build that scans the cloth With the camera built on the 
+washing machine and it will scan the Cloth type using Gemini API and Give Results Back to the App and thereby to 
+the arduine connected to the washing machine . then it will analyse how much water , detergent and time it needs to
+do washing and it will inform the washing machine and it does the work Which will Increase the lifetime of cloth
+
+We have connected a relay to the washing machine motor which enables the motor to rotate clock wise for 5 seconds and stop for 2 seconds 
+and then rerotate for 5 seconds counter clockwise and it loop on
+we have connected Arduino to the Motor which will dispense the amount of detergent to the washing machine as Required  
+we have Created a linear regression function to calculate the amount of time the valve must be open to dispense the required volume of
+detergent 
+(First We calculated the volume of detergent that dispense in specific time, 
+That is We found volume of detergent at the time 50ms,100ms,150ms,....upto 2400ms and created an Excel sheet table 
+then we calculated the value of a and b of the linear regression equation and found the equation
+then we applied the equation to the Arduino code to get the exact amount of dispensed detergent )
+
+Ruvais
+----------
+Hardware components
+semiautomatic washing machine
+Arduino wifi R4(Control full function of washing machine)
+Relays(2-Rotation , 1-Solenoid Inlet Valve from Pipe)
+Solenoid Water Inlet Valve 
+3 Phase Motor(240v ,10A -- Motor inside Washing machine)
+5 Volt DC Water pump(Detergent Dispenser)
+Transistor (TAS122) (Control Pump motor of detergent)
+12V L298N DC Motor Driver(Control Outlet valve)
+
+Arudion Code
+Linear Regression (Formation , Equation ,Data Set , Graph)-----Detergent
+							    ~--Inlet
+Component Designing (CKT Diagram , Design)
+1)Detergent Dispenser
+2)AC Motor
+3)Water Inlet Valve
+4)Water Outlet Mechanism
+
+
+
+Jaseeb
+---------
+
+Sajad
+---------
+
+Rishap
+---------

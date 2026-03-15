@@ -1,0 +1,49 @@
+% Chapter 1: Introduction
+\chapter{Introduction}
+
+\section{Methodology}
+The project follows a systematic five-phase methodology to convert a conventional semi-automatic washing machine into an AI-integrated fully automatic system.
+
+\paragraph{Phase 1: Hardware Retrofit}
+The existing washing machine was retrofitted with an Arduino WiFi R4 microcontroller as the central control unit. Relays were installed to control the 240V, 10A three-phase motor with programmed rotation logic: 5 seconds clockwise, 2 seconds pause, 5 seconds counter-clockwise (continuous loop). A solenoid valve regulated water inlet, while a 5V DC pump controlled via TAS122 transistor handled detergent dispensing. An L298N motor driver managed the outlet valve for automated drainage.
+
+\paragraph{Phase 2: Detergent Dispensing Calibration}
+Linear regression was employed for precise detergent control. Detergent volume was measured at 50ms intervals from 50ms to 2400ms, creating an Excel calibration dataset. The linear equation \( \text{Volume} = a \times \text{Time} + b \) was derived and implemented in Arduino code for real-time dispensing calculations.
+
+\paragraph{Phase 3: AI Model Development}
+Multi-stage prompts were engineered for the Gemini API to enable:
+\begin{itemize}
+    \item Fabric type identification from garment images
+    \item Fiber category classification (Natural/Synthetic/Semi-synthetic)
+    \item Soil level assessment (scale 1–5)
+    \item Washing parameter calculation (detergent amount, soak/spin times, water level, temperature)
+\end{itemize}
+
+\paragraph{Phase 4: Software Architecture}
+A React Native Expo mobile application was developed for user interaction. Two FastAPI services were created: Fabric Analysis API (port 8000) using Pillow for image processing, and Washing Parameter API (port 8001) for cycle calculation. Both APIs provide OpenAPI documentation and structured JSON output.
+
+\paragraph{Phase 5: Testing and Validation}
+Human-in-the-Loop testing was conducted across diverse fabric types (denim, cotton, chiffon, synthetics) to identify misclassifications and iteratively refine prompt accuracy.
+
+\section{Features}
+The AI-Integrated Washing Machine offers the following key features:
+\begin{itemize}
+    \item \textbf{Automated Fabric Recognition:} Camera-based garment scanning with real-time identification of material type, fiber category, and fabric properties using Gemini API.
+    \item \textbf{Intelligent Soil Assessment:} Visual dirt level analysis on a standardized 1–5 scale based on stain visibility and coverage.
+    \item \textbf{Dynamic Parameter Calculation:} Automatic determination of detergent quantity (ml), soak time (minutes), spin duration (minutes), water level (liters), wash cycles, temperature (°C), and mechanical action (Gentle/Normal/Heavy Duty).
+    \item \textbf{Precision Hardware Control:} Programmable motor rotation (clockwise/counter-clockwise cycling), solenoid-actuated water inlet, linear regression-based detergent dispensing, and automated outlet drainage.
+    \item \textbf{Mobile Application Interface:} Cross-platform React Native app with Dashboard, Fabric Analysis, Wash Progress, Manual Override, and Settings screens.
+    \item \textbf{Dual-API Architecture:} RESTful FastAPI services with OpenAPI documentation, Pydantic data validation, and structured JSON communication.
+    \item \textbf{Feedback Loop:} Human-in-the-Loop correction mechanism to improve classification accuracy over time.
+    \item \textbf{Resource Optimization:} Precise water, detergent, and energy usage based on actual garment requirements.
+\end{itemize}
+
+\section{Significance of Work}
+\begin{itemize}
+    \item \textbf{Technological Integration:} This project demonstrates successful convergence of AI services (Gemini API), embedded systems (Arduino), mobile development (React Native), and backend APIs (FastAPI) into a cohesive functional system.
+    \item \textbf{Garment Longevity:} By matching wash parameters to specific fabric requirements, the system extends clothing lifespan, providing economic benefit and reducing textile waste.
+    \item \textbf{Resource Conservation:} Precise calculation of water and detergent quantities minimizes household waste and environmental impact.
+    \item \textbf{Retrofit Innovation:} The project provides a cost-effective blueprint for upgrading legacy appliances with intelligent capabilities, offering an economical alternative to purchasing new AI-enabled machines and reducing electronic waste.
+    \item \textbf{Educational Value:} The comprehensive architecture serves as a learning platform encompassing embedded programming, AI integration, mobile development, API design, and statistical modeling.
+    \item \textbf{Scalability:} The fundamental architecture—AI analysis driving hardware control—is applicable to numerous domains including smart irrigation, HVAC systems, and industrial automation.
+\end{itemize}

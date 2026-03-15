@@ -1,0 +1,50 @@
+\chapter{Introduction}
+\label{ch:introduction}
+\noindent
+The laundry industry today faces significant challenges in maintaining clothing quality and optimizing resource usage during washing. In the current system, users rely on traditional washing machines that operate with fixed cycles and manual settings, often mixing different fabrics together without consideration for their specific care requirements. Users must manually sort clothes, check fabric labels, and guess the appropriate detergent amount and water level, creating a trial-and-error approach to laundry. This lack of intelligence leads to several critical issues: clothes experience premature fading, shrinking, and damage; excessive water and detergent are wasted harming the environment; delicate fabrics like silk and wool are often ruined in standard cycles; and users remain dependent on physical clothing labels that may fade or become unreadable over time. Additionally, households operate without an intelligent system to efficiently manage laundry and optimize resource consumption based on actual fabric needs.
+
+\noindent
+The integration of artificial intelligence into home appliances has become increasingly important in recent years, with sustainability and fabric care gaining worldwide attention. The modern consumer expects smart home solutions that adapt to specific requirements rather than relying on one-size-fits-all approaches. Users, particularly those with expensive wardrobes, sensitive skin, or large families, require laundry solutions that can identify fabric types and dispense precise amounts of detergent and water accordingly. Furthermore, the need for an automated, vision-based system to analyze clothing and determine optimal wash parameters has become paramount in extending garment lifespan, reducing environmental impact through resource conservation, and improving overall user convenience in daily household chores.
+
+\section{Problem Statement}
+The existing laundry ecosystem suffers from the following key problems:
+
+\begin{itemize}
+    \item \textbf{Lack of Fabric Identification}: Current washing machines cannot identify fabric types automatically, forcing users to manually sort clothes and rely on fading or missing care labels.
+    \item \textbf{Inefficient Resource Usage}: Without knowing fabric composition, machines use excessive water and detergent, leading to wastage, increased costs, and negative environmental impact.
+    \item \textbf{Clothing Damage and Reduced Lifespan}: Mixing different fabrics in standard wash cycles causes premature fading, shrinking, pilling, and structural damage to garments.
+    \item \textbf{Dependence on Manual Labels}: Users must read and preserve physical clothing tags, which often fade, tear, or become illegible after multiple washes.
+    \item \textbf{Inconsistent Wash Quality}: Different users have varying knowledge of fabric care, resulting in inconsistent cleaning results and accidental damage to delicate items.
+    \item \textbf{Lack of Adaptive Intelligence}: Traditional machines lack the ability to adjust wash parameters (water temperature, drum motion, cycle duration) based on real-time fabric analysis.
+\end{itemize}
+
+\section{Objectives}
+The primary objectives of the AI-Integrated Washing Machine project are:
+
+\begin{enumerate}
+    \item \textbf{Implement Vision-Based Fabric Detection}: Develop a camera system mounted on the washing machine that captures images of each clothing item and identifies fabric types using computer vision and machine learning algorithms.
+    \item \textbf{Create Automated Resource Dispensing}: Design an intelligent dispensing mechanism that supplies exactly the required amount of detergent and water based on detected fabric composition, load weight, and soil level.
+    \item \textbf{Enable Optimal Wash Cycle Selection}: Automatically determine and execute the most appropriate wash cycle parameters including water temperature, drum rotation speed, and cycle duration for each unique fabric combination.
+    \item \textbf{Build Fabric Knowledge Database}: Create and maintain a comprehensive dataset of fabric types with their specific care requirements, detergent compatibility, and optimal washing conditions.
+    \item \textbf{Provide User Interface and Feedback}: Develop an intuitive user interface displaying detected fabrics, recommended settings, and providing real-time feedback on wash progress and resource consumption.
+    \item \textbf{Ensure Long-Term Garment Care}: Implement wash algorithms specifically designed to preserve fabric quality, color retention, and structural integrity over repeated wash cycles.
+\end{enumerate}
+
+\section{Scope of the Project}
+The scope of the AI-Integrated Washing Machine encompasses the following aspects:
+
+\subsection{Application Scope}
+The system is designed for residential and small commercial laundry applications, targeting households, apartment complexes, laundromats, and small garment care businesses. The initial focus is on common fabric types including cotton, polyester, wool, silk, linen, nylon, and blended fabrics. The system accommodates various load sizes from small delicate items to full laundry loads.
+
+\subsection{Functional Scope}
+\begin{itemize}
+    \item \textbf{Automated Fabric Detection}: Camera-based image capture and real-time fabric classification using computer vision and deep learning models.
+    \item \textbf{Resource Calculation and Dispensing}: Dynamic calculation of water volume and detergent quantity based on fabric type, load weight, and soil level with automated dispensing.
+    \item \textbf{Wash Cycle Customization}: Generation of tailored wash cycles with appropriate temperature, agitation, duration, and spin speed parameters.
+    \item \textbf{Load Weight Sensing}: Integration with weight sensors to determine total load mass for accurate resource calculation.
+    \item \textbf{User Interface and Display}: Touchscreen or mobile application interface showing detected fabrics, selected cycle, estimated resource usage, and wash progress.
+    \item \textbf{Data Logging and Learning}: Storage of wash history and fabric data to improve future cycle recommendations through machine learning.
+\end{itemize}
+
+\subsection{Technical Scope}
+The project involves developing an embedded vision system using a high-resolution camera and microcontroller or single-board computer (Raspberry Pi/ similar). Machine learning models are trained on fabric image datasets for accurate classification. The system integrates with existing washing machine hardware including water inlet valves, detergent dispensers, drum motors, and sensors. Software development includes embedded programming, computer vision algorithms, and optional mobile application development for remote monitoring and control. The project also encompasses mechanical design considerations for camera placement, lighting, and protection from moisture and vibration.

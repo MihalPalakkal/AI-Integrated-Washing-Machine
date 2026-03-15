@@ -1,0 +1,157 @@
+\chapter{System Study}
+
+The system study phase involves understanding existing healthcare management challenges and analyzing requirements for BondHealth. This chapter covers problem definition, feasibility analysis, and requirements gathering.
+
+\section{Existing System}
+
+\subsection{Current Healthcare Challenges}
+\begin{itemize}
+    \item \textbf{Fragmented Medical Records:} Patient data scattered across different healthcare facilities with no central access.
+    \item \textbf{Manual Appointment Management:} Reliance on phone calls and paper-based scheduling.
+    \item \textbf{Delayed Lab Results:} Reports take days to reach doctors due to manual delivery.
+    \item \textbf{Lack of Patient Engagement:} Limited patient access to their own health information.
+    \item \textbf{Administrative Inefficiency:} Excessive time spent on paperwork and manual data entry.
+\end{itemize}
+
+\subsection{Disadvantages of Existing System}
+\begin{itemize}
+    \item No centralized patient health records
+    \item Increased wait times and communication gaps
+    \item Higher chances of medical errors due to missing information
+    \item Limited scalability for growing healthcare networks
+\end{itemize}
+
+\section{Proposed System}
+
+\subsection{System Overview}
+BondHealth is a web-based healthcare management platform connecting patients, doctors, hospitals, and laboratories on a unified system. The platform provides:
+\begin{itemize}
+    \item \textbf{Centralized Patient Records:} Complete medical history accessible to authorized providers
+    \item \textbf{Online Appointment System:} 24/7 booking with real-time availability
+    \item \textbf{Digital Lab Reports:} Instant sharing of test results
+    \item \textbf{Role-Based Dashboards:} Customized interfaces for all user types
+    \item \textbf{Secure Authentication:} JWT-based authentication with role-based access control
+\end{itemize}
+
+\subsection{Advantages of Proposed System}
+\begin{itemize}
+    \item Seamless access to patient history across connected hospitals
+    \item Reduced wait times and instant lab report delivery
+    \item Enhanced patient engagement through personal health portal
+    \item Improved administrative efficiency and scalable architecture
+\end{itemize}
+
+\section{Feasibility Study}
+
+\subsection{Technical Feasibility}
+Uses proven technologies: Node.js/Express for backend, PostgreSQL for database, JWT for authentication, and responsive design for all devices.
+
+\subsection{Operational Feasibility}
+User-friendly interfaces require minimal training; role-based dashboards simplify daily tasks; automated workflows reduce manual work.
+
+\subsection{Economic Feasibility}
+Reduces administrative costs, eliminates paper-based systems, improves staff productivity, and uses open-source technology to minimize licensing costs.
+
+\section{Requirements Analysis}
+
+\subsection{Functional Requirements}
+
+\subsubsection{Patient Module}
+\begin{itemize}
+    \item Registration, profile management, appointment booking
+    \item Access medical reports, prescriptions, and write reviews
+\end{itemize}
+
+\subsubsection{Doctor Module}
+\begin{itemize}
+    \item View appointments, access patient history, review lab reports
+    \item Manage availability and leave requests
+\end{itemize}
+
+\subsubsection{Hospital Admin Module}
+\begin{itemize}
+    \item Register doctors, manage medicine inventory, add labs
+    \item View statistics and manage doctor leave schedules
+\end{itemize}
+
+\subsubsection{Lab Technician Module}
+\begin{itemize}
+    \item Upload reports, update status, share results with doctors/patients
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+
+\subsubsection{Performance Requirements}
+\begin{itemize}
+    \item Page load < 3 seconds, handle 1000+ concurrent users
+    \item API response < 200ms for standard operations
+\end{itemize}
+
+\subsubsection{Security Requirements}
+\begin{itemize}
+    \item Passwords hashed with bcrypt, JWT tokens with 7-day expiration
+    \item Role-based access control and secure HttpOnly cookies
+\end{itemize}
+
+\subsubsection{Usability \& Reliability Requirements}
+\begin{itemize}
+    \item Intuitive interface with responsive design
+    \item 99.9\% uptime, data backup, transaction integrity
+\end{itemize}
+
+\section{System Architecture Overview}
+
+\begin{figure}[h]
+\centering
+\fbox{\begin{minipage}{0.8\textwidth}
+\centering
+\textbf{Three-Tier Architecture}
+\begin{itemize}
+    \item \textbf{Presentation Layer:} HTML, CSS, JavaScript, Tailwind CSS
+    \item \textbf{Application Layer:} Node.js, Express.js
+    \item \textbf{Data Layer:} PostgreSQL Database
+\end{itemize}
+\end{minipage}}
+\caption{BondHealth Three-Tier Architecture}
+\label{fig:architecture}
+\end{figure}
+
+The BondHealth system follows a three-tier architecture with client, application, and data tiers handling presentation, business logic, and data persistence respectively.
+
+\section{System Modules}
+
+\subsection{Authentication Module}
+Handles JWT-based registration, login, session management, and role-based access control.
+
+\subsection{Patient Management Module}
+Manages profiles, medical history, appointments, and report access.
+
+\subsection{Appointment Management Module}
+Handles real-time availability checking, booking, rescheduling, and cancellation.
+
+\subsection{Reporting Module}
+Manages lab report uploads, status tracking, and secure sharing between stakeholders.
+
+\section{User Roles and Permissions}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Role} & \textbf{Permissions} \\
+\hline
+Patient & View own records, book appointments, access reports \\
+\hline
+Doctor & View appointments, access patient history, review reports \\
+\hline
+Hospital Admin & Manage doctors, staff, inventory, view analytics \\
+\hline
+Lab Technician & Upload reports, update status, share results \\
+\hline
+\end{tabular}
+\caption{User Roles and Access Levels}
+\label{tab:roles}
+\end{table}
+
+\section{Summary}
+The system study has established clear requirements for BondHealth, addressing critical gaps in patient data management, appointment scheduling, and report sharing. The modular architecture with role-based access control positions BondHealth to effectively transform healthcare delivery in connected facilities.
