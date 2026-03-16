@@ -7,7 +7,8 @@ Unit testing was performed on individual components to verify correct functional
 \subsection{API Unit Tests}
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|c|}
+    \small
+    \begin{tabularx}{\textwidth}{|l|X|X|X|c|}
         \hline
         \textbf{Test ID} & \textbf{Module} & \textbf{Input} & \textbf{Expected Output} & \textbf{Result} \\
         \hline
@@ -15,9 +16,9 @@ Unit testing was performed on individual components to verify correct functional
         \hline
         UT-02 & API 1 - Input validation & Text file instead of image & HTTP 422 error & PASS \\
         \hline
-        UT-03 & API 2 - Parameter calculation & Cotton (dirt=4) and Silk (dirt=2) & Temp=30°C, Spin=6min & PASS \\
+        UT-03 & API 2 - Parameter calculation & Cotton (dirt=4) and Silk (dirt=2) & Temp=30$^\circ$C, Spin=6min & PASS \\
         \hline
-    \end{tabular}
+    \end{tabularx}
     \caption{API Unit Tests}
     \label{tab:unit_api}
 \end{table}
@@ -25,7 +26,8 @@ Unit testing was performed on individual components to verify correct functional
 \subsection{Arduino Unit Tests}
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|c|}
+    \small
+    \begin{tabularx}{\textwidth}{|l|l|X|X|c|}
         \hline
         \textbf{Test ID} & \textbf{Module} & \textbf{Input} & \textbf{Expected Output} & \textbf{Result} \\
         \hline
@@ -33,7 +35,7 @@ Unit testing was performed on individual components to verify correct functional
         \hline
         UT-05 & runMotorCycle() & 1 min, Normal pattern & 5s CW, 2s pause, 5s CCW & PASS \\
         \hline
-    \end{tabular}
+    \end{tabularx}
     \caption{Arduino Unit Tests}
     \label{tab:unit_arduino}
 \end{table}
@@ -46,7 +48,8 @@ Integration testing verified that modules work together correctly.
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|c|}
+    \small
+    \begin{tabularx}{\textwidth}{|l|X|X|c|}
         \hline
         \textbf{Test ID} & \textbf{Description} & \textbf{Steps} & \textbf{Result} \\
         \hline
@@ -56,18 +59,11 @@ Integration testing verified that modules work together correctly.
         \hline
         IT-03 & Full system end-to-end & Image capture → Analysis → Parameters → Hardware execution & PASS \\
         \hline
-    \end{tabular}
+    \end{tabularx}
     \caption{Integration Tests}
     \label{tab:integration}
 \end{table}
 
-% Figure for integration test log
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/c7diagram1}
-    \caption{Successful End-to-End Integration Test Output}
-    \label{fig:integration_log}
-\end{figure}
 
 \section{Performance Testing}
 

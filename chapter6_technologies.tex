@@ -28,7 +28,8 @@ The entire project was developed on a Windows 11 machine, with cross-platform co
 \section{Programming Languages}
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|c|l|}
+    \small
+    \begin{tabularx}{\textwidth}{|l|c|X|}
         \hline
         \textbf{Language} & \textbf{Version} & \textbf{Usage} \\
         \hline
@@ -40,7 +41,7 @@ The entire project was developed on a Windows 11 machine, with cross-platform co
         \hline
         JavaScript & ES6 & React Native components and logic \\
         \hline
-    \end{tabular}
+    \end{tabularx}
     \caption{Programming Languages}
     \label{tab:langs}
 \end{table}
@@ -258,7 +259,8 @@ A 240V AC normally‑closed solenoid valve controls the flow of water from the h
 \section{Deployment and Hosting}
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|}
+    \small
+    \begin{tabularx}{\textwidth}{|l|X|}
         \hline
         \textbf{Component} & \textbf{Deployment Strategy} \\
         \hline
@@ -268,7 +270,7 @@ A 240V AC normally‑closed solenoid valve controls the flow of water from the h
         \hline
         Arduino Firmware & Flashed via USB; updates can be delivered over‑the‑air using WiFi (future enhancement) \\
         \hline
-    \end{tabular}
+    \end{tabularx}
     \caption{Deployment and Hosting}
     \label{tab:deploy}
 \end{table}
@@ -276,13 +278,14 @@ A 240V AC normally‑closed solenoid valve controls the flow of water from the h
 \section{Security Measures}
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|}
+    \small
+    \begin{tabularx}{\textwidth}{|l|X|}
         \hline
         \textbf{Measure} & \textbf{Implementation} \\
         \hline
         API Key Protection & Stored in environment variables, never hard‑coded \\
         \hline
-        Rate Limiting & Implemented via tenacity retries and future middleware \\
+        Rate Limit & Implemented via tenacity retries and future middleware \\
         \hline
         Input Validation & Pydantic models ensure only valid data is accepted \\
         \hline
@@ -290,7 +293,7 @@ A 240V AC normally‑closed solenoid valve controls the flow of water from the h
         \hline
         Physical Safety & Relays fail open; software watchdogs; emergency stop in mobile app \\
         \hline
-    \end{tabular}
+    \end{tabularx}
     \caption{Security Measures}
     \label{tab:security}
 \end{table}
