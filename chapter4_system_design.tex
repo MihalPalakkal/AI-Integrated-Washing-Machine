@@ -14,6 +14,8 @@ The Intelligent Laundry System follows a clear ``Eyes and Brain'' architectural 
     \caption{High-Level ``Eyes and Brain'' System Architecture}
     \label{fig:eyes_brain}
 \end{figure}
+This diagram illustrates the fundamental architectural split of the system. The ``Eyes'' (API 1) handle the visual input through image processing and AI-driven fabric identification, while the ``Brain'' (API 2) performs the logical reasoning and mathematical scaling required to determine safe and effective washing parameters. This separation ensures that the complex task of computer vision does not interfere with the precision required for hardware control.
+
 
 \section{Data Flow Diagram (DFD)}
 
@@ -24,6 +26,8 @@ The Intelligent Laundry System follows a clear ``Eyes and Brain'' architectural 
     \caption{DFD Level 0 – System Context Diagram}
     \label{fig:dfd0}
 \end{figure}
+The Context Diagram (Level 0 DFD) defines the boundaries of the Intelligent Laundry System. It shows the system as a single process interacting with three external entities: the User, who provides images and receives status; the AI System (Gemini), which provides fabric analysis; and the Washing Machine Hardware, which receives control signals and reports back the cycle progress.
+
 
 \subsection{DFD Level 1}
 \begin{figure}[H]
@@ -33,26 +37,8 @@ The Intelligent Laundry System follows a clear ``Eyes and Brain'' architectural 
     \label{fig:dfd1}
 \end{figure}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{2cm}|p{4cm}|p{3cm}|p{4cm}|}
-        \hline
-        \textbf{Process} & \textbf{Description} & \textbf{Input} & \textbf{Output} \\
-        \hline
-        P1: Image Capture & User captures up to 5 garment images & User command, camera feed & Multiple images \\
-        \hline
-        P2: Fabric Analysis (API 1) & Process images through Gemini vision model & Image data, feedback corrections & Fabric type, fiber category, dirt level (1–5), confidence score \\
-        \hline
-        P3: Feedback Loop & User corrections for misclassifications & Incorrect prediction, correct label & Corrected data for retry \\
-        \hline
-        P4: Parameter Calculation (API 2) & Calculate wash parameters using load scaling algorithm & Fabric analysis from multiple items & Temperature, water level, detergent, soak time, spin time, mechanical action \\
-        \hline
-        P5: Hardware Control & Execute wash cycle & Combined safe parameters & Motor control signals \\
-        \hline
-    \end{tabular}
-    \caption{DFD Level 1 Process Descriptions}
-    \label{tab:dfd1_processes}
-\end{table}
+The Detailed Data Flow (Level 1 DFD) breaks down the system into five core processes. It begins with \textbf{P1: Image Capture}, where the user’s command triggers the camera feed to capture up to five garment images. These images are passed to \textbf{P2: Fabric Analysis (API 1)}, which utilizes the Gemini vision model to determine the fabric type, fiber category, and dirt level. If a misclassification occurs, \textbf{P3: Feedback Loop} allows the user to submit corrections, providing refined data for a retry. Once the analysis is finalized, \textbf{P4: Parameter Calculation (API 2)} applies the load scaling algorithm to these inputs to derive optimal settings for temperature, water level, detergent, and cycle timings. Finally, in \textbf{P5: Hardware Control}, these combined safe parameters are translated into specific electrical signals to drive the washing machine’s motor and valves.
+
 
 \section{Use Case Diagram}
 \begin{figure}[H]
@@ -61,6 +47,8 @@ The Intelligent Laundry System follows a clear ``Eyes and Brain'' architectural 
     \caption{UML Use Case Diagram}
     \label{fig:usecase}
 \end{figure}
+The Use Case Diagram identifies the primary interactions between the system's actors and its functional components. The User remains the central actor, initiating garment scans, reviewing AI results, and occasionally providing correction feedback. The AI System (Gemini) acts as a supporting actor for fabric analysis, while the Washing Machine Hardware executes the resulting use cases such as starting the wash cycle and reporting real-time progress.
+
 
 \textbf{Actors:}
 \begin{itemize}
@@ -139,74 +127,16 @@ The most significant engineering challenge was safely processing mixed loads con
     \caption{Mixed Load Safety Decision Flow}
     \label{fig:loadscaling}
 \end{figure}
+This decision flow diagram details the logic used when the system encounters multiple items in a single load. The core philosophy is ``safety first,'' where the system evaluates the requirements of every item and automatically selects the most conservative settings—such as the lowest temperature and gentlest mechanical action—to ensure that no delicate garment is damaged during a mixed-fabric wash cycle.
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|p{8cm}|p{5cm}|}
-        \hline
-        \textbf{Parameter} & \textbf{Selection Rule} & \textbf{Safety Rationale} \\
-        \hline
-        Temperature & Minimum value across all items & Prevents shrinking/damage to delicate fabrics \\
-        \hline
-        Spin Time & Minimum value across all items & Prevents stretching delicate fabrics \\
-        \hline
-        Water Level & Calculated based on load size, capped at 60L & Prevents overflow, ensures cleaning \\
-        \hline
-        Mechanical Action & Gentlest action required by any item & Protects most sensitive garment \\
-        \hline
-        Detergent & Calculated for heaviest soil level & Ensures cleaning without excess \\
-        \hline
-    \end{tabular}
-    \caption{Parameter Selection Rules for Mixed Loads}
-    \label{tab:mixed_rules}
-\end{table}
 
-\subsection{Code Implementation}
-\begin{lstlisting}[caption=Python Implementation of Load Scaling Algorithm, label=lst:loadscale, language=Python]
-def combine_washing_params(logics):
-    # Protect delicate clothes by identifying the safest minimum temperature
-    safe_temperature = min(item.temperature_setting for item in logics)
-    
-    # Protect delicate clothes by identifying the lowest safe spin time
-    safe_spin_time = min(item.spin_time for item in logics)
-    
-    # Calculate enough water for the clothes, capped strictly at 60 Liters
-    calculated_water = calculate_water_based_on_items(logics)
-    water_amount = min(calculated_water, 60)
-    
-    # Select gentlest mechanical action required
-    action_priority = {"Gentle": 1, "Normal": 2, "Heavy Duty": 3}
-    gentlest_action = min(logics, key=lambda x: action_priority[x.mechanical_action])
-    
-    # Return the final, combined safe instructions
-    return {
-        "temperature_setting": safe_temperature,
-        "spin_time": safe_spin_time,
-        "water_level": water_amount,
-        "mechanical_action": gentlest_action.mechanical_action,
-        "detergent_amount": calculate_detergent_for_heaviest_soil(logics)
-    }
-\end{lstlisting}
+To manage mixed loads effectively, the system follows a set of strict parameter selection rules designed for fabric safety and cleaning efficiency. For temperature and spin time, the algorithm always selects the minimum value among all garments in the load to prevent heat-induced shrinking or mechanical stretching of delicate fibers. The water level is dynamically calculated based on the total load size but is strictly capped at a 60-liter maximum to prevent overflow. Mechanical action is determined by the most sensitive item, ensuring the gentlest required agitation is used for the entire batch. Conversely, detergent volume is calculated based on the heaviest soil level identified in the load, ensuring thorough cleaning without wasting chemicals.
 
-\subsection{Edge Case Handling}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|p{10cm}|}
-        \hline
-        \textbf{Edge Case} & \textbf{System Response} \\
-        \hline
-        Non-clothing image uploaded & API 1 returns error, API 2 not triggered \\
-        \hline
-        5 completely different fabrics & Algorithm selects safest parameters for most delicate item \\
-        \hline
-        Extremely high dirt level (5) & Increases detergent and soak time while maintaining fabric-safe temperature \\
-        \hline
-        Load size exceeds normal & Water level capped at 60L absolute maximum \\
-        \hline
-    \end{tabular}
-    \caption{Edge Case Handling Strategies}
-    \label{tab:edge_cases}
-\end{table}
+
+
+
+The system is engineered to handle various edge cases gracefully through predefined handling strategies. If a non-clothing image is accidentally uploaded, the visual analysis layer (API 1) identifies the error and prevents the subsequent parameter calculation from being triggered. In scenarios involving highly diverse loads with five different fabric types, the algorithm defaults to the safest possible parameters for the most delicate item identified. For garments with extremely high soil levels (level 5), the system proactively increases detergent volume and soak durations while strictly maintaining the fabric-safe temperature limits. Finally, if the total load size exceeds normal capacity, the system applies a hard cap of 60 liters on the water level to ensure safe operation.
+
 
 \section{Feedback Loop Design}
 The system incorporates a Human-in-the-Loop (HITL) feedback mechanism for continuous improvement.
@@ -256,40 +186,7 @@ To prove system integration, an automated test pipeline validates both APIs work
     \label{fig:testoutput}
 \end{figure}
 
-\begin{verbatim}
-============================================================
-STEP 1: Sending image to API-1 (Clothing Material Identifier)
-============================================================
-Status: 200 SUCCESS
-API-1 Response:
-{
-  "material_type": "Cotton Denim",
-  "fiber_category": "Natural",
-  "dirt_level": 4,
-  "confidence_score": 0.94
-}
 
-============================================================
-STEP 2: Sending data to API-2 (Washing Parameter Predictor)
-============================================================
-Status: 200 SUCCESS
-
-============================================================
-FINAL WASHING MACHINE INSTRUCTIONS:
-============================================================
-\textbf{CLOTHING ANALYSIS FROM STAGE 1 (EYES):}
-Material: Cotton Denim
-Dirt Level: 4
-
- EXACT MACHINE PARAMETERS FROM STAGE 2 (BRAIN):
-Temperature: 40°C
-Water Level: 20L
-Detergent: 45mL
-Soak Time: 15 min
-Spin Time: 12 min
-Mechanical Action: Heavy Duty
-============================================================
-\end{verbatim}
 
 \section{Hardware Control Interface Design}
 The hardware interface translates API 2 parameters into Arduino control signals.
@@ -301,25 +198,4 @@ The hardware interface translates API 2 parameters into Arduino control signals.
     \label{fig:hardware_map}
 \end{figure}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|l|l|}
-        \hline
-        \textbf{Software Parameter} & \textbf{Hardware Action} & \textbf{Control Method} \\
-        \hline
-        Temperature setting & Heater control (if available) & Relay/PWM \\
-        \hline
-        Water level & Water inlet duration & Solenoid valve timing \\
-        \hline
-        Detergent amount & Pump activation time & Linear regression calculation \\
-        \hline
-        Soak time & Motor off, timer running & Software timer \\
-        \hline
-        Spin time & Motor rotation pattern & Relay sequence \\
-        \hline
-        Mechanical action & Motor speed/pattern & Relay timing variation \\
-        \hline
-    \end{tabular}
-    \caption{Hardware Control Mapping}
-    \label{tab:hardware_map}
-\end{table}
+The Software-to-Hardware Parameter Mapping illustrates how the logical wash settings are converted into physical machine actions. The temperature setting is mapped to heater control using relays or PWM signals. The water level is achieved by controlling the duration of the water inlet solenoid valve. For detergent dispensing, the system calculates the exact pump activation time using a linear regression model based on the required volume. Soak times are implemented via software timers that keep the motor off for the specified period, while spin times and mechanical actions are executed through precise relay sequences and timing variations that control the motor’s rotation pattern and effective speed.

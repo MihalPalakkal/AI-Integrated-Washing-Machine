@@ -68,32 +68,10 @@ Academic research has explored various smart laundry concepts:
 However, these remain laboratory prototypes without integration into functional washing machines or consideration for retrofit applications.
 
 \subsection{Limitations of Existing Systems}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|p{10cm}|}
-        \hline
-        \textbf{Aspect} & \textbf{Limitation} \\
-        \hline
-        Fabric Identification & No existing consumer machine performs visual fabric analysis \\
-        \hline
-        Parameter Adaptation & Fixed cycles cannot adapt to actual soil level or fabric sensitivity \\
-        \hline
-        Resource Optimization & Water and detergent usage based on averages, not actual requirements \\
-        \hline
-        Cost & Smart machines are prohibitively expensive \\
-        \hline
-        Retrofit Potential & No solutions exist for upgrading existing machines \\
-        \hline
-        Open Architecture & Proprietary systems prevent user modification or enhancement \\
-        \hline
-    \end{tabular}
-    \caption{Limitations of Existing Washing Machines}
-    \label{tab:limitations}
-\end{table}
+Conventional washing machines face several critical limitations across multiple aspects. In terms of fabric identification, no existing consumer machine performs true visual analysis of the garments. Parameter adaptation is also restricted, as fixed cycles cannot adjust to actual soil levels or fabric sensitivity. Furthermore, resource optimization is hindered by water and detergent usage being based on broad averages rather than specific requirements. From a financial perspective, ready-made smart machines are prohibitively expensive for many households. Additionally, there are currently no viable retrofit solutions for upgrading existing machines, and the proprietary nature of commercial systems prevents users from modifying or enhancing their appliances.
 
 \section{Proposed System}
-The proposed AI-Integrated Washing Machine addresses the limitations of existing systems through a comprehensive retrofit solution that combines computer vision, AI-based decision making, and automated hardware control.
-
+The proposed AI‑Integrated Washing Machine addresses the limitations of existing systems through a comprehensive retrofit solution that combines computer vision, AI‑based decision making, and automated hardware control. The system is designed to convert a conventional semi‑automatic washing machine into a fully intelligent appliance by integrating three core layers: a visual analysis layer that uses the Gemini API to identify fabric type, fiber category, and soil level from captured garment images; a reasoning layer implemented as dual FastAPI services that translate the visual data into precise washing parameters (detergent volume, water level, soak and spin times, temperature, and mechanical action); and an execution layer driven by an Arduino WiFi R4 microcontroller that autonomously controls the motor, water inlet, detergent pump, and outlet valve. A cross‑platform mobile application built with React Native provides the user interface for scanning, cycle monitoring, and manual override, completing an end‑to‑end solution that eliminates guesswork, optimizes resource usage, and extends fabric life. The architecture is modular, allowing each component to be developed, tested, and upgraded independently, while the use of a feedback loop enables continuous improvement of AI accuracy through user corrections. This approach not only delivers smart functionality at a fraction of the cost of new AI‑enabled machines but also offers a replicable blueprint for retrofitting legacy appliances.
 \subsection{System Overview}
 The system transforms a conventional semi-automatic washing machine into an intelligent appliance capable of:
 \begin{itemize}
@@ -183,30 +161,7 @@ The system transforms a conventional semi-automatic washing machine into an inte
 \end{enumerate}
 
 \subsection{Advantages Over Existing Systems}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|p{10cm}|}
-        \hline
-        \textbf{Aspect} & \textbf{Proposed System Advantage} \\
-        \hline
-        Fabric Identification & Visual analysis using Gemini API for accurate material detection \\
-        \hline
-        Parameter Adaptation & Dynamic calculation based on actual fabric and soil level \\
-        \hline
-        Resource Optimization & Precise water and detergent quantities minimize waste \\
-        \hline
-        Cost & Retrofit approach at fraction of new smart machine cost \\
-        \hline
-        Retrofit Potential & Can upgrade existing semi-automatic machines \\
-        \hline
-        Open Architecture & Documented APIs enable customization and enhancement \\
-        \hline
-        Feedback Loop & Human-in-the-Loop improves accuracy over time \\
-        \hline
-    \end{tabular}
-    \caption{Advantages of Proposed System}
-    \label{tab:advantages}
-\end{table}
+The proposed AI-Integrated Washing Machine offers significant advantages over conventional systems. By utilizing the Gemini API for visual analysis, it achieves accurate and automated material detection. The system enables dynamic parameter adaptation, calculating wash settings based on the actual fabric type and soil level detected. This leads to superior resource optimization, where precise water and detergent quantities are used to minimize waste. The retrofit approach provides these smart features at a fraction of the cost of purchasing a new AI-enabled machine and is compatible with existing semi-automatic models. Its open architecture and documented APIs allow for easy customization and future enhancements, while an integrated feedback loop allows the system to improve its classification accuracy over time based on user input.
 
 \section{Software Requirements Specification}
 
@@ -306,26 +261,7 @@ The software system performs the following primary functions:
 \subsubsection{External Interfaces}
 \textbf{User Interfaces:}
 The mobile application provides the primary user interface with the following screens:
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|p{8cm}|p{4cm}|}
-        \hline
-        \textbf{Screen} & \textbf{Purpose} & \textbf{Interface Elements} \\
-        \hline
-        Dashboard & System overview and quick actions & Status indicators, quick scan button, recent cycles \\
-        \hline
-        Fabric Analysis & Garment scanning and results & Camera viewfinder, capture button, results display, confidence indicator \\
-        \hline
-        Wash Progress & Cycle monitoring & Progress bar, time remaining, stage indicator, cancel button \\
-        \hline
-        Manual Override & Emergency controls & Motor stop, water stop, drain now, reset \\
-        \hline
-        Settings & Configuration & WiFi setup, calibration values, user preferences \\
-        \hline
-    \end{tabular}
-    \caption{Mobile Application Screens}
-    \label{tab:screens}
-\end{table}
+The mobile application is designed with several key screens to provide a comprehensive user experience. The Dashboard serves as the central hub, offering a system overview, status indicators, recent cycle history, and a quick-scan button. The Fabric Analysis screen facilitates the core functionality of garment scanning, featuring a camera viewfinder, capture controls, and a results display with confidence indicators. For active cycles, the Wash Progress screen provides real-time monitoring through progress bars, time-remaining estimates, and stage indicators. Safety and control are handled by the Manual Override screen, which includes emergency controls for stopping the motor or water flow and immediate drainage. Finally, the Settings screen allows for system configuration, including WiFi setup, calibration values, and personalized user preferences.
 
 \textbf{Hardware Interfaces:}
 \begin{table}[H]
@@ -384,19 +320,19 @@ The mobile application provides the primary user interface with the following sc
 
 \subsubsection{Functional Requirements}
 \begin{description}
-    \item[FR1: User Authentication]
+    \item[FR1: User Authentication] \hfill \\
         \begin{itemize}
             \item FR1.1: System shall allow user registration with email and password
             \item FR1.2: System shall authenticate users before granting access
             \item FR1.3: System shall maintain user sessions securely
         \end{itemize}
-    \item[FR2: Garment Scanning]
+    \item[FR2: Garment Scanning] \hfill \\
         \begin{itemize}
             \item FR2.1: System shall activate device camera for image capture
             \item FR2.2: System shall allow user to capture garment image
             \item FR2.3: System shall transmit image to FastAPI 1 for processing
         \end{itemize}
-    \item[FR3: Fabric Analysis (API 1)]
+    \item[FR3: Fabric Analysis (API 1)] \hfill \\
         \begin{itemize}
             \item FR3.1: System shall accept image uploads in JPEG/PNG format
             \item FR3.2: System shall process image using Pillow library
@@ -406,7 +342,7 @@ The mobile application provides the primary user interface with the following sc
             \item FR3.6: System shall return fabric analysis to mobile app
             \item FR3.7: System shall log analysis for feedback loop
         \end{itemize}
-    \item[FR4: Parameter Calculation (API 2)]
+    \item[FR4: Parameter Calculation (API 2)] \hfill \\
         \begin{itemize}
             \item FR4.1: System shall accept fabric data from API 1
             \item FR4.2: System shall apply Prompt 2 logic to calculate washing parameters
@@ -414,7 +350,7 @@ The mobile application provides the primary user interface with the following sc
             \item FR4.4: System shall return parameters in specified JSON format
             \item FR4.5: System shall format parameters for Arduino transmission
         \end{itemize}
-    \item[FR5: Arduino Control]
+    \item[FR5: Arduino Control] \hfill \\
         \begin{itemize}
             \item FR5.1: System shall receive wash parameters via WiFi
             \item FR5.2: System shall calculate detergent pump time using linear regression: \( \text{Time} = (\text{Volume} - b) / a \)
@@ -424,13 +360,13 @@ The mobile application provides the primary user interface with the following sc
             \item FR5.6: System shall control outlet valve for drainage
             \item FR5.7: System shall report cycle status to mobile app
         \end{itemize}
-    \item[FR6: Manual Override]
+    \item[FR6: Manual Override] \hfill \\
         \begin{itemize}
             \item FR6.1: System shall provide emergency stop for all operations
             \item FR6.2: System shall allow manual drain activation
             \item FR6.3: System shall allow manual pump control for calibration
         \end{itemize}
-    \item[FR7: Feedback and Logging]
+    \item[FR7: Feedback and Logging] \hfill \\
         \begin{itemize}
             \item FR7.1: System shall record all fabric analyses with confidence scores
             \item FR7.2: System shall allow user correction of misclassifications
@@ -465,13 +401,13 @@ The mobile application provides the primary user interface with the following sc
 % NFR1: Performance
 \multicolumn{2}{|c|}{\textbf{NFR1: Performance}} \\
 \hline
-Image capture to analysis results & < 5 seconds \\
+Image capture to analysis results & $<$ 5 seconds \\
 \hline
-API response time (internal) & < 500 ms \\
+API response time (internal) & $<$ 500 ms \\
 \hline
-Gemini API response time & < 3 seconds \\
+Gemini API response time & $<$ 3 seconds \\
 \hline
-Arduino command execution & < 100 ms \\
+Arduino command execution & $<$ 100 ms \\
 \hline
 Concurrent users supported & Minimum 10 \\
 \hline
@@ -481,7 +417,7 @@ Concurrent users supported & Minimum 10 \\
 \hline
 System uptime & 99\% (excluding network/API dependencies) \\
 \hline
-Mean time between failures & > 100 cycles \\
+Mean time between failures & $>$ 100 cycles \\
 \hline
 Graceful degradation & Manual mode available if AI services unavailable \\
 \hline
@@ -571,13 +507,13 @@ Arduino firmware & Supports updates over WiFi \\
 % NFR9: Accuracy
 \multicolumn{2}{|c|}{\textbf{NFR9: Accuracy}} \\
 \hline
-Fabric classification confidence & >85\% \\
+Fabric classification confidence & $>$85\% \\
 \hline
-Detergent dispensing accuracy & ±2 ml \\
+Detergent dispensing accuracy & $\pm$2 ml \\
 \hline
-Water level accuracy & ±0.5 liters \\
+Water level accuracy & $\pm$0.5 liters \\
 \hline
-Timing accuracy & ±1 second \\
+Timing accuracy & $\pm$1 second \\
 \hline
 
 % NFR10: Regulatory Compliance
