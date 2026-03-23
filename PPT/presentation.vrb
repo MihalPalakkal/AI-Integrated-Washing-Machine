@@ -1,0 +1,15 @@
+\frametitle{AI \& Prompt Engineering – Stage 2 (Output)}
+\frametitle{Wash Parameters JSON}
+\begin{block}{Output JSON (Stage 2)}
+\begin{verbatim}
+{
+  "detergent_ml": 28,
+  "soak_minutes": 15,
+  "spin_minutes": 8,
+  "water_liters": 35,
+  "wash_cycles": 2,
+  "temperature_c": 45,
+  "mechanical_action": "Normal"
+}
+\end{verbatim}
+\end{block}
