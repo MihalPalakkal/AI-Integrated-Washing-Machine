@@ -27,6 +27,12 @@ This diagram illustrates the fundamental architectural split of the system. The 
     \label{fig:dfd0}
 \end{figure}
 The Context Diagram (Level 0 DFD) defines the boundaries of the Intelligent Laundry System. It shows the system as a single process interacting with three external entities: the User, who provides images and receives status; the AI System (Gemini), which provides fabric analysis; and the Washing Machine Hardware, which receives control signals and reports back the cycle progress.
+The User is the primary actor who initiates the laundry process by uploading garment images through the interface and receives real-time updates and washing recommendations in return.
+The Intelligent Laundry System acts as the central process that receives image inputs, performs fabric analysis through the AI module, calculates the appropriate wash cycle parameters, and sends control signals to the hardware. It internally handles two key functions — fabric type detection and wash cycle calculation.
+The AI System (Gemini) processes the garment images and returns detailed fabric analysis results, enabling the system to identify fabric types such as cotton, silk, or synthetic blends and determine the safest washing settings accordingly.
+The Washing Machine Hardware executes the washing cycle based on the control signals received and continuously reports the cycle progress and operational status back to the system for real-time monitoring.
+Together, these components define the complete operational scope of the Intelligent Laundry System, forming the foundation for the more detailed lower-level DFDs discussed in the following sections.
+
 
 
 \subsection{DFD Level 1}
@@ -198,4 +204,4 @@ The hardware interface translates API 2 parameters into Arduino control signals.
     \label{fig:hardware_map}
 \end{figure}
 
-The Software-to-Hardware Parameter Mapping illustrates how the logical wash settings are converted into physical machine actions. The temperature setting is mapped to heater control using relays or PWM signals. The water level is achieved by controlling the duration of the water inlet solenoid valve. For detergent dispensing, the system calculates the exact pump activation time using a linear regression model based on the required volume. Soak times are implemented via software timers that keep the motor off for the specified period, while spin times and mechanical actions are executed through precise relay sequences and timing variations that control the motor’s rotation pattern and effective speed.
+The Software-to-Hardware Parameter Mapping illustrates how the logical wash settings are converted into physical machine actions. The temperature setting is mapped to heater control using relays or PWM signals. The water level is achieved by controlling the duration of the water inlet solenoid valve. For detergent dispensing, the system calculates the exact pump activation time using a linear regression model based on the required volume. Soak times are implemented via software timers that keep the motor off for the specified period, while spin times and mechanical actions are executed through precise relay sequences and timing variations that control the motor’s rotation pattern and effective speed.

@@ -9,7 +9,7 @@ The Arduino WiFi R4 serves as the central hardware controller, executing the was
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{img/c5diagram1}
-    \caption{Arduino Firmware in Arduino IDE}
+    \caption{Circuit Diagram}
     \label{fig:arduino_ide}
 \end{figure}
 
@@ -197,60 +197,52 @@ Precise detergent dispensing required empirical calibration to establish the rel
 Detergent volume was measured at 50ms intervals from 50ms to 2400ms. The data was recorded and is presented in Table~\ref{tab:calibration}.
 
 
-\begin{center}
-\begin{longtable}{|c|c|}
-\caption{Calibration Data}\label{tab:calibration}\\
-\hline
-\textbf{Time (ms)} & \textbf{Volume (ml)} \\
-\hline
-\endfirsthead
-\multicolumn{2}{c}%
-{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-\hline
-\textbf{Time (ms)} & \textbf{Volume (ml)} \\
-\hline
-\endhead
-\hline \multicolumn{2}{r}{{Continued on next page}} \\ \hline
-\endfoot
-\hline
-\endlastfoot
-50   & 0.0   \\
-100  & 0.0   \\
-150  & 0.0   \\
-200  & 0.5   \\
-250  & 2.0   \\
-300  & 3.0   \\
-350  & 4.5   \\
-400  & 5.0   \\
-450  & 6.0   \\
-500  & 7.5   \\
-550  & 8.5   \\
-600  & 9.75  \\
-650  & 10.25 \\
-700  & 11.5  \\
-750  & 12.0  \\
-800  & 13.0  \\
-850  & 15.0  \\
-900  & 16.5  \\
-950  & 18.0  \\
-1000 & 19.0  \\
-1050 & 20.0  \\
-1100 & 21.0  \\
-1200 & 23.0  \\
-1300 & 25.5  \\
-1400 & 26.5  \\
-1500 & 28.0  \\
-1600 & 30.0  \\
-1700 & 33.0  \\
-1800 & 35.5  \\
-1900 & 39.5  \\
-2000 & 41.5  \\
-2100 & 44.5  \\
-2200 & 46.0  \\
-2300 & 48.0  \\
-2400 & 50.5  \\
-\end{longtable}
-\end{center}
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Calibration Data}\label{tab:calibration}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Time (ms)} & \textbf{Volume (ml)} \\
+        \hline
+        50   & 0.0   \\
+        100  & 0.0   \\
+        150  & 0.0   \\
+        200  & 0.5   \\
+        250  & 2.0   \\
+        300  & 3.0   \\
+        350  & 4.5   \\
+        400  & 5.0   \\
+        450  & 6.0   \\
+        500  & 7.5   \\
+        550  & 8.5   \\
+        600  & 9.75  \\
+        650  & 10.25 \\
+        700  & 11.5  \\
+        750  & 12.0  \\
+        800  & 13.0  \\
+        850  & 15.0  \\
+        900  & 16.5  \\
+        950  & 18.0  \\
+        1000 & 19.0  \\
+        1050 & 20.0  \\
+        1100 & 21.0  \\
+        1200 & 23.0  \\
+        1300 & 25.5  \\
+        1400 & 26.5  \\
+        1500 & 28.0  \\
+        1600 & 30.0  \\
+        1700 & 33.0  \\
+        1800 & 35.5  \\
+        1900 & 39.5  \\
+        2000 & 41.5  \\
+        2100 & 44.5  \\
+        2200 & 46.0  \\
+        2300 & 48.0  \\
+        2400 & 50.5  \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \subsection{Linear Regression Analysis}
 Using the method of least squares, the linear regression coefficients were calculated as follows:
@@ -274,27 +266,32 @@ b = \frac{\Sigma y - a \cdot \Sigma x}{n}
 
 Substituting the values:
 
+\vspace{-10pt}
 \[
 a = \frac{35 \times 1,\!047,\!750 - 42000 \times 637.5}{35 \times 63,\!700,\!000 - 42000^2} = 0.022175840697103585
 \]
+\vspace{-10pt}
 \[
 b = \frac{637.5 - a \times 42000}{35} = -3.5696873465881223
 \]
-
+\vspace{-10pt}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{img/c5diagram3}
+    \includegraphics[width=0.7\textwidth]{img/c5diagram3}
     \caption{Volume vs Time Linear Regression Graph}
     \label{fig:regression_graph}
 \end{figure}
 
 \textbf{Regression Equation:}
+\vspace{-12pt}
 \[
 \text{Volume (ml)} = 0.022176 \times \text{Time (ms)} - 3.569687
 \]
-
+\vspace{-12pt}
 \begin{table}[H]
     \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
     \begin{tabular}{|l|c|}
         \hline
         \textbf{Coefficient} & \textbf{Value} \\
@@ -312,21 +309,18 @@ The high \(R^2\) value indicates excellent linear correlation, validating the li
 
 \subsection{Implementation in Arduino}
 The derived equation is implemented in the Arduino code for real-time calculation. To find the time required for a desired volume, the equation is rearranged:
-
+\vspace{-8pt}
 \[
 \text{Time (ms)} = \frac{\text{Volume} + 3.569687}{0.022176}
 \]
-
+\vspace{-8pt}
 The Arduino function uses this formula with safety constraints as shown in section~\ref{lst:detergent}.
-
 \section{API Implementation}
 Two FastAPI services were implemented to handle fabric analysis and washing parameter calculation.
-
 \subsection{FastAPI 1: Clothing Material Identifier}
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{img/c5diagram4}
+    \includegraphics[width=0.7\textwidth]{img/c5diagram4}
     \caption{FastAPI 1 Implementation}
     \label{fig:fastapi1_code}
 \end{figure}
@@ -406,6 +400,7 @@ async def submit_feedback(filename: str, correct_material: str):
     return {"message": "Feedback received"}
 \end{lstlisting}
 
+\newpage
 \subsection{API Documentation}
 FastAPI automatically generates interactive API documentation.
 
@@ -533,6 +528,8 @@ async def predict_parameters(request: BatchWashRequest):
     }
 \end{lstlisting}
 
+
+\newpage
 \section{AI Integration}
 
 \subsection{Prompt Engineering}
@@ -603,6 +600,7 @@ Return in JSON format.
 }
 \end{lstlisting}
 
+\newpage
 \subsection{Rate Limiting and Error Handling}
 
 \begin{lstlisting}[language=Python, caption=Retry Logic for Gemini API, label=lst:retry]
@@ -631,13 +629,14 @@ The Arduino is connected to the existing washing machine components through the 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{img/c5diagram9}
+    \includegraphics[width=0.45\textwidth, angle=90]{img/c5diagram9}
     \caption{Arduino WiFi R4 Connected to Washing Machine Control Panel}
     \label{fig:arduino_connected}
 \end{figure}
 
+\newpage
 The image shows:
-\begin{itemize}
+\begin{itemize}[noitemsep, topsep=0pt]
     \item Arduino WiFi R4 mounted securely
     \item Wiring harness to relays and sensors
     \item Connection to existing machine wiring
@@ -691,6 +690,7 @@ The 5V DC pump draws liquid detergent from a container and dispenses it directly
 \textbf{Operation:}
 The pump is activated for precise durations calculated by the linear regression formula, delivering exact detergent volumes.
 
+\newpage
 \subsection{Water Inlet Solenoid Valve}
 The solenoid valve controls water flow from the household supply into the washing machine drum.
 
@@ -738,6 +738,7 @@ A complete test was performed to validate the entire system from image capture t
 
 \subsection{Test Execution Log}
 
+\begin{small}
 \begin{verbatim}
 ============================================================
 TEST START: Intelligent Laundry System End-to-End
@@ -788,6 +789,7 @@ STEP 4: Arduino Execution
 TEST RESULT: PASSED - System fully operational
 ============================================================
 \end{verbatim}
+\end{small}
 
 \section{Implementation Summary}
 

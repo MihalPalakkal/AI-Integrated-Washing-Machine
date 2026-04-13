@@ -32,6 +32,7 @@
 
 % Hyperref – should be loaded last (except bookmark)
 \usepackage{hyperref}
+\usepackage{pdfpages}
 \usepackage{bookmark}            % improved PDF bookmarks
 
 % ============ GEOMETRY & PAGE LAYOUT ============
@@ -51,13 +52,13 @@
   keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with, const, let, class, export, import, yield, async, await},
   keywordstyle=\color{blue}\bfseries,
   ndkeywords={true, false, null, undefined, NaN, Infinity},
-  ndkeywordstyle=\color{red},
+  ndkeywordstyle=\color{black},
   identifierstyle=\color{black},
   sensitive=false,
   comment=[l]{//},
   morecomment=[s]{/*}{*/},
   commentstyle=\color{green!40!black},
-  stringstyle=\color{red},
+  stringstyle=\color{black},
   morestring=[b]',
   morestring=[b]"
 }
@@ -76,7 +77,7 @@
   comment=[l]{//},
   morecomment=[s]{/*}{*/},
   commentstyle=\color{green!40!black},
-  stringstyle=\color{red},
+  stringstyle=\color{black},
   morestring=[b]',
   morestring=[b]"
 }
@@ -88,7 +89,7 @@
   comment=[l]{//},
   morecomment=[s]{/*}{*/},
   commentstyle=\color{green!40!black},
-  stringstyle=\color{red},
+  stringstyle=\color{black},
   morestring=[b]',
   morestring=[b]"
 }
@@ -100,7 +101,7 @@
   comment=[l]{\#},
   morecomment=[s]{/*}{*/},
   commentstyle=\color{green!40!black},
-  stringstyle=\color{red},
+  stringstyle=\color{black},
   morestring=[b]',
   morestring=[b]"
 }
@@ -115,7 +116,7 @@
   morecomment=[s]{'''}{'''},
   morecomment=[s]{"""}{"""},
   commentstyle=\color{green!40!black},
-  stringstyle=\color{red},
+  stringstyle=\color{black},
   morestring=[b]',
   morestring=[b]"
 }
@@ -124,7 +125,7 @@
     basicstyle=\ttfamily\small,
     keywordstyle=\color{blue},
     commentstyle=\color{green!40!black},
-    stringstyle=\color{red},
+    stringstyle=\color{black},
     numbers=left,
     numberstyle=\tiny\color{gray},
     numbersep=5pt,
@@ -140,7 +141,7 @@
 
 % ============ SECTION HEADING FORMATS ============
 \titleformat{\chapter}[display]
-  {\normalfont\bfseries\itshape\fontsize{14}{16}\selectfont}{\chaptertitlename\ \thechapter}{20pt}{}
+  {\normalfont\bfseries\fontsize{14}{16}\selectfont}{\chaptertitlename\ \thechapter}{20pt}{}
 \titlespacing*{\chapter}{0pt}{-20pt}{30pt}
 \titleformat{\section}
   {\normalfont\bfseries\fontsize{12}{14}\selectfont}{\thesection}{1em}{}
@@ -152,9 +153,10 @@
 % ============ HYPERREF SETUP ============
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+    citecolor=black,
     pdftitle={AI-Integrated Washing Machine},
     pdfpagemode=FullScreen,
 }
@@ -164,13 +166,19 @@
 \setcounter{secnumdepth}{3}
 
 % ============ TOC/LOF/LOT CUSTOMIZATION ============
-\renewcommand{\cftfigpresnum}{Figure }
-\renewcommand{\cftfigaftersnum}{: }
-\setlength{\cftfignumwidth}{5.5em} % Adjust width to fit "Figure X.X: "
+\setlength{\cftfignumwidth}{6em}
+\renewcommand{\cftafterloftitle}{%
+  \\[1em]
+  \noindent\makebox[\cftfignumwidth][l]{Figure No.}\hfill Figure Name\hfill Page No.\par
+  \vspace{0.5em}
+}
 
-\renewcommand{\cfttabpresnum}{Table }
-\renewcommand{\cfttabaftersnum}{: }
-\setlength{\cfttabnumwidth}{5.5em} % Adjust width to fit "Table X.X: "
+\setlength{\cfttabnumwidth}{6em}
+\renewcommand{\cftafterlottitle}{%
+  \\[1em]
+  \noindent\makebox[\cfttabnumwidth][l]{Table No.}\hfill Table Name\hfill Page No.\par
+  \vspace{0.5em}
+}
 
 % ============ HEADER & FOOTER STYLES ============
 \fancypagestyle{plain}{
@@ -208,7 +216,7 @@
 
 % ============ BEGIN DOCUMENT ============
 \begin{document}
-
+\input{cover}
 \include{title}
 \include{certificate}
 
@@ -223,7 +231,6 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
-\clearpage
 \phantomsection
 \addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
