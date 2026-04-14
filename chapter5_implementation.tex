@@ -2,7 +2,17 @@
 \chapter{System Implementation}
 
 \section{Arduino Implementation}
-The Arduino WiFi R4 serves as the central hardware controller, executing the washing cycle based on parameters received from the API services. The firmware is written in C++ using the Arduino IDE.
+The Arduino WiFi R4 serves as the central hardware controller, executing the washing cycle based on parameters retrieved from Firebase. The firmware is written in C++ using the Arduino IDE.
+
+\subsection{Washing Machine Control Algorithm}
+The firmware follows a structured sequence to manage the washing process autonomously. Upon receiving parameters from Firebase, the system initiates an initial drum rotation to balance the load, followed by automated detergent dispensing and water filling. The soak phase and main wash cycle are then executed, with support for additional rinse and spin cycles as specified by the user. The following flowchart details this operational logic.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/c5WM_algorithm}
+    \caption{Washing Machine Logic Flowchart}
+    \label{fig:wm_algorithm}
+\end{figure}
 
 \subsection{Complete Arduino Code}
 
@@ -14,121 +24,187 @@ The Arduino WiFi R4 serves as the central hardware controller, executing the was
 \end{figure}
 
 \begin{lstlisting}[language=C++, caption=Complete Arduino Firmware, label=lst:arduino_full]
-#include <WiFi.h>
-#include <ArduinoJson.h>
+#include "secrets.h"
+#include <Firebase.h>
+#include <WiFiS3.h>
 
-// Pin Definitions
-#define RELAY_CW 2      // Motor Clockwise
-#define RELAY_CCW 3     // Motor Counter-Clockwise
-#define RELAY_WATER 4   // Water Inlet Solenoid
-#define PUMP_PWM 5      // Detergent Pump (PWM controlled)
-#define L298N_IN1 6     // Outlet Valve Direction 1
-#define L298N_IN2 7     // Outlet Valve Direction 2
-#define L298N_ENA 8     // Outlet Valve Speed (PWM)
+// ================= Firebase =================
+Firebase fb(REFERENCE_URL);
 
-// WiFi Credentials
-const char* ssid = "Your_SSID";
-const char* password = "Your_PASSWORD";
+int detergent_amount = 0;   // ml
+int soack_time = 0;         // sec
+int spin_time = 0;          // sec
+int wash_cycle = 0;         // count
+int water_level = 0;        // liters
 
-// API Endpoints
-const char* serverUrl = "http://192.168.1.100:8002/parameters";
+// ================= Drum =================
+int CW = 7;
+int CCW = 8;
 
-// Linear Regression Coefficients (from calibration)
-const float DETERGENT_A = 0.022176;  // Volume = A * Time + B
-const float DETERGENT_B = -3.569687;
+// ================= Pump =================
+int enPin = 5;
+int pumpIn1 = 3;
+int pumpIn2 = 2;
 
-// Washing Parameters
-struct WashParams {
-  float detergent_ml;
-  int soak_minutes;
-  int spin_minutes;
-  float water_liters;
-  int wash_cycles;
-  int temperature;
-  String mechanical_action;
-};
+// Calibration
+float a = 0.02218;
+float b = -3.570;
+int motorSpeed = 128;
 
-WashParams currentWash;
+// ================= Valves =================
+int INLET = 6;
 
+int outletIn1 = 9;
+int outletIn2 = 10;
+int outletEnA = 11;
+
+// ================= Timing =================
+unsigned long rotateRunTime = 5000;
+unsigned long rotateStopTime = 2000;
+unsigned long drainTime = 60000; // 1 min
+
+// =====================================================
+// SETUP
+// =====================================================
 void setup() {
   Serial.begin(115200);
-  
-  // Initialize pins
-  pinMode(RELAY_CW, OUTPUT);
-  pinMode(RELAY_CCW, OUTPUT);
-  pinMode(RELAY_WATER, OUTPUT);
-  pinMode(PUMP_PWM, OUTPUT);
-  pinMode(L298N_IN1, OUTPUT);
-  pinMode(L298N_IN2, OUTPUT);
-  pinMode(L298N_ENA, OUTPUT);
-  
-  // Ensure all outputs are OFF initially
-  digitalWrite(RELAY_CW, LOW);
-  digitalWrite(RELAY_CCW, LOW);
-  digitalWrite(RELAY_WATER, LOW);
-  analogWrite(PUMP_PWM, 0);
-  digitalWrite(L298N_IN1, LOW);
-  digitalWrite(L298N_IN2, LOW);
-  analogWrite(L298N_ENA, 0);
-  
-  // Connect to WiFi
-  connectToWiFi();
+
+  pinMode(CW, OUTPUT);
+  pinMode(CCW, OUTPUT);
+
+  pinMode(enPin, OUTPUT);
+  pinMode(pumpIn1, OUTPUT);
+  pinMode(pumpIn2, OUTPUT);
+
+  pinMode(INLET, OUTPUT);
+
+  pinMode(outletIn1, OUTPUT);
+  pinMode(outletIn2, OUTPUT);
+  pinMode(outletEnA, OUTPUT);
+
+  stopDrum();
+  stopPump();
+  closeInletValve();
+  stopOutletMotor();
+
+  // -------- WiFi --------
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi Connected");
+
+  // -------- Firebase Read --------
+  fb.getInt("detergent_amount", detergent_amount);
+  fb.getInt("soack_time", soack_time);
+  fb.getInt("spin_time", spin_time);
+  fb.getInt("wash_cycle", wash_cycle);
+  fb.getInt("water_level", water_level);
+
+  Serial.println("Firebase Data Loaded");
 }
 
+// =====================================================
+// LOOP
+// =====================================================
 void loop() {
-  // Check for new parameters from server
-  if (WiFi.status() == WL_CONNECTED) {
-    fetchWashParameters();
+
+  if (spin_time > 0) {
+
+    Serial.println("===== WASH STARTED =====");
+
+    float waterML = water_level * 1000.0;
+
+    // STEP 1: Initial rotation
+    rotateDrumForDuration(15000);
+
+    // STEP 2: Add detergent
+    dispense(detergent_amount);
+
+    // STEP 3: Fill water
+    fillWater(waterML);
+
+    // STEP 4: Soak
+    delay(soack_time * 1000UL);
+
+    // STEP 5: MAIN WASH
+    rotateDrumForDuration(spin_time * 1000UL);
+
+    // ===============================
+    //  EXTRA WASH CYCLES
+    // ===============================
+    for (int i = 0; i < wash_cycle; i++) {
+
+      Serial.print("Cycle ");
+      Serial.println(i + 1);
+
+      // Drain
+      openOutletValve();
+      delay(drainTime);
+      closeOutletValve();
+
+      // Refill
+      fillWater(waterML);
+
+      // Spin again
+      rotateDrumForDuration(spin_time * 1000UL);
+    }
+
+    // FINAL DRAIN
+    openOutletValve();
+    delay(drainTime);
+    closeOutletValve();
+
+    Serial.println("===== WASH COMPLETE =====");
+
+    spin_time = 0; // prevent repeat
   }
-  
-  delay(5000); // Check every 5 seconds
 }
 \end{lstlisting}
+
 
 \subsection{Motor Rotation Logic}
 The motor control function implements the timed rotation pattern required for effective washing.
 
 \begin{lstlisting}[language=C++, caption=Motor Rotation Control, label=lst:motor]
-void runMotorCycle(int totalMinutes, String action) {
-  unsigned long cycleStart = millis();
-  unsigned long totalDuration = totalMinutes * 60000UL; // Convert to milliseconds
-  
-  // Determine rotation pattern based on mechanical action
-  int cwTime = 5000;      // 5 seconds default
-  int ccwTime = 5000;     // 5 seconds default
-  int pauseTime = 2000;   // 2 seconds default
-  
-  if (action == "Gentle") {
-    cwTime = 3000;        // 3 seconds for gentle
-    ccwTime = 3000;       // 3 seconds for gentle
-    pauseTime = 3000;     // 3 seconds pause
-  } else if (action == "Heavy Duty") {
-    cwTime = 8000;        // 8 seconds for heavy
-    ccwTime = 8000;       // 8 seconds for heavy
-    pauseTime = 1000;     // 1 second pause
+void rotateCW() {
+  digitalWrite(CW, LOW);
+  digitalWrite(CCW, HIGH);
+}
+
+void rotateCCW() {
+  digitalWrite(CW, HIGH);
+  digitalWrite(CCW, LOW);
+}
+
+void stopDrum() {
+  digitalWrite(CW, HIGH);
+  digitalWrite(CCW, HIGH);
+}
+
+void rotateDrumForDuration(unsigned long totalTime) {
+
+  unsigned long startTime = millis();
+
+  while (millis() - startTime < totalTime) {
+
+    rotateCW();
+    delay(rotateRunTime);
+
+    stopDrum();
+    delay(rotateStopTime);
+
+    if (millis() - startTime >= totalTime) break;
+
+    rotateCCW();
+    delay(rotateRunTime);
+
+    stopDrum();
+    delay(rotateStopTime);
   }
-  
-  while((millis() - cycleStart) < totalDuration) {
-    // Clockwise rotation
-    digitalWrite(RELAY_CW, HIGH);
-    digitalWrite(RELAY_CCW, LOW);
-    delay(cwTime);
-    
-    // Pause
-    digitalWrite(RELAY_CW, LOW);
-    digitalWrite(RELAY_CCW, LOW);
-    delay(pauseTime);
-    
-    // Counter-clockwise rotation
-    digitalWrite(RELAY_CW, LOW);
-    digitalWrite(RELAY_CCW, HIGH);
-    delay(ccwTime);
-    
-    // Pause
-    digitalWrite(RELAY_CW, LOW);
-    digitalWrite(RELAY_CCW, LOW);
-    delay(pauseTime);
-  }
+
+  stopDrum();
 }
 \end{lstlisting}
 
@@ -136,57 +212,47 @@ void runMotorCycle(int totalMinutes, String action) {
 The detergent pump is controlled using the linear regression equation derived from calibration.
 
 \begin{lstlisting}[language=C++, caption=Detergent Dispensing Functions, label=lst:detergent]
-float calculatePumpTime(float requiredVolume) {
-  // Time = (Volume - b) / a, with b negative so add its absolute value
-  float timeMs = (requiredVolume + 3.569687) / 0.022176;
-  
-  // Apply safety limits (calibrated range 50ms - 2400ms)
-  if (timeMs < 50) timeMs = 50;
-  if (timeMs > 2400) timeMs = 2400;
-  
-  return timeMs;
+void stopPump() {
+  analogWrite(enPin, 0);
+  digitalWrite(pumpIn1, LOW);
+  digitalWrite(pumpIn2, LOW);
 }
 
-void dispenseDetergent(float requiredVolume) {
-  float timeMs = calculatePumpTime(requiredVolume);
-  
-  Serial.print("Dispensing ");
-  Serial.print(requiredVolume);
-  Serial.print(" ml for ");
-  Serial.print(timeMs);
-  Serial.println(" ms");
-  
-  // Activate pump
-  analogWrite(PUMP_PWM, 255); // Full speed
-  delay((int)timeMs);
-  analogWrite(PUMP_PWM, 0);   // Stop
-  
-  Serial.println("Detergent dispensed");
+void dispense(float ml) {
+
+  float cal_ml = ml * 0.41;
+  float time_ms = (cal_ml - b) / a;
+
+  if (time_ms < 0) time_ms = 0;
+
+  analogWrite(enPin, motorSpeed);
+  digitalWrite(pumpIn1, HIGH);
+  digitalWrite(pumpIn2, LOW);
+
+  delay((unsigned long)time_ms);
+
+  stopPump();
 }
 \end{lstlisting}
 
 \subsection{Water Inlet Control}
 
 \begin{lstlisting}[language=C++, caption=Water Inlet Function, label=lst:water]
-void fillWater(float requiredLiters) {
-  // Flow rate: 8 liters per minute (calibrated)
-  const float FLOW_RATE = 8.0; // L/min
-  
-  float timeMinutes = requiredLiters / FLOW_RATE;
-  unsigned long timeMs = timeMinutes * 60000UL;
-  
-  Serial.print("Filling ");
-  Serial.print(requiredLiters);
-  Serial.print(" liters for ");
-  Serial.print(timeMinutes);
-  Serial.println(" minutes");
-  
-  // Open solenoid valve
-  digitalWrite(RELAY_WATER, HIGH);
-  delay(timeMs);
-  digitalWrite(RELAY_WATER, LOW);
-  
-  Serial.println("Water fill complete");
+void openInletValve() {
+  digitalWrite(INLET, LOW);
+}
+
+void closeInletValve() {
+  digitalWrite(INLET, HIGH);
+}
+
+void fillWater(float ml) {
+
+  unsigned long fillTime = (ml / 650.0) * 10000.0;
+
+  openInletValve();
+  delay(fillTime);
+  closeInletValve();
 }
 \end{lstlisting}
 
@@ -243,7 +309,7 @@ Detergent volume was measured at 50ms intervals from 50ms to 2400ms. The data wa
         \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \subsection{Linear Regression Analysis}
 Using the method of least squares, the linear regression coefficients were calculated as follows:
 
@@ -674,14 +740,14 @@ The 5V DC pump draws liquid detergent from a container and dispenses it directly
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{img/c5diagram11}
-    \caption{5V DC Pump with TAS122 Transistor Control}
+    \caption{5V DC Pump with Motor Driver Control}
     \label{fig:pump}
 \end{figure}
 
 \textbf{Components:}
 \begin{itemize}
     \item 5V DC water pump
-    \item TAS122 MOSFET transistor
+    \item Motor driver (e.g., L298N) or H-bridge
     \item 1N4007 flyback diode
     \item Silicone tubing
     \item Detergent container
@@ -718,14 +784,16 @@ The physical implementation follows the circuit design from Chapter 4, with all 
         \hline
         \textbf{Arduino Pin} & \textbf{Component} & \textbf{Connection} \\
         \hline
-        D2 & Relay 1 (Motor CW) & Signal \\
-        D3 & Relay 2 (Motor CCW) & Signal \\
-        D4 & Relay 3 (Water Inlet) & Signal \\
-        D5 (PWM) & TAS122 Base (Pump) & Signal via 1kohm \\
-        D6 & L298N IN1 & Direction \\
-        D7 & L298N IN2 & Direction \\
-        D8 (PWM) & L298N ENA & Speed \\
-        5V & Relay modules & VCC \\
+        D2 & Pump Driver & IN2 \\
+        D3 & Pump Driver & IN1 \\
+        D5 (PWM) & Pump Driver & EN \\
+        D6 & Relay (Water Inlet) & Signal \\
+        D7 & Relay (Motor CW) & Signal \\
+        D8 & Relay (Motor CCW) & Signal \\
+        D9 & Outlet Motor Driver & IN1 \\
+        D10 & Outlet Motor Driver & IN2 \\
+        D11 (PWM)& Outlet Motor Driver & ENA \\
+        5V & Relay modules / Drivers & VCC \\
         GND & All components & Common ground \\
         \hline
     \end{tabular}

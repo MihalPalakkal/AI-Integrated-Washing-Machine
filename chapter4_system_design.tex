@@ -110,6 +110,7 @@ The Use Case Diagram identifies the primary interactions between the system's ac
 \textbf{Endpoint:} \texttt{/predict/}\\
 \textbf{Method:} POST\\
 \textbf{Input:} API 1 output JSON\\
+\newpage
 \textbf{Output:} Combined washing parameters for the entire load
 
 \begin{lstlisting}[caption=API 2 Response Format, label=lst:api2, language=JSON]
@@ -205,3 +206,31 @@ The hardware interface translates API 2 parameters into Arduino control signals.
 \end{figure}
 
 The Software-to-Hardware Parameter Mapping illustrates how the logical wash settings are converted into physical machine actions. The temperature setting is mapped to heater control using relays or PWM signals. The water level is achieved by controlling the duration of the water inlet solenoid valve. For detergent dispensing, the system calculates the exact pump activation time using a linear regression model based on the required volume. Soak times are implemented via software timers that keep the motor off for the specified period, while spin times and mechanical actions are executed through precise relay sequences and timing variations that control the motor’s rotation pattern and effective speed.
+
+\section{User Interface Design}
+The mobile application provides users with an intuitive interface to interact with the Intelligent Laundry System. It allows users to capture garment images, review AI-generated fabric analysis, and monitor the calculated wash parameters and process. The sequence of screenshots below visualizes the primary flow and user experience of the application.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.31\textwidth]{img/app1.jpeg}\hfill
+    \includegraphics[width=0.31\textwidth]{img/app2.jpeg}\hfill
+    \includegraphics[width=0.31\textwidth]{img/app3.jpeg}
+    \caption{Application Interface Design - Dashboard and Capture (Part 1)}
+    \label{fig:app_interface_1}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.32\textwidth]{img/app4.jpeg}\hspace{1cm}
+    \includegraphics[width=0.32\textwidth]{img/app5.jpeg}
+    
+    \vspace{0.5cm}
+    
+    \includegraphics[width=0.32\textwidth]{img/app6.jpeg}\hspace{1cm}
+    \includegraphics[width=0.32\textwidth]{img/app7.jpeg}
+    
+    \caption{Application Interface Design - Analysis and Settings (Part 2)}
+    \label{fig:app_interface_2}
+\end{figure}
