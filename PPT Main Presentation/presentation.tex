@@ -244,8 +244,8 @@
     ([xshift=13.7cm, yshift=4.8cm]current page.south west) circle (3.8cm);
   \fill[NavyBlue!80]
     ([xshift=13.7cm, yshift=4.8cm]current page.south west) circle (3.0cm);
-  \node[text=AccentCyan, font=\fontsize{42}{50}\selectfont]
-    at ([xshift=13.7cm, yshift=4.8cm]current page.south west) {\faRobot};
+  \node at ([xshift=13.7cm, yshift=4.8cm]current page.south west)
+    {\includegraphics[width=4.5cm]{img/WM_logo.png}};
 
   % --- Title area ---
   \def\leftmargin{0.85cm}
@@ -350,20 +350,21 @@ Convert a semi-automatic machine into a \textbf{fully automated, AI-powered} sys
 \begin{frame}{System Architecture}
 
 \begin{center}
+\hspace*{-0.5cm}
 \begin{tikzpicture}[
   box/.style={%
     rectangle, rounded corners=5pt,
     fill=NavyBlue, text=white,
     font=\small\bfseries,
-    minimum height=0.78cm, minimum width=2.2cm,
+    minimum height=0.78cm, minimum width=2.0cm,
     align=center, inner sep=5pt},
   arr/.style={->, thick, color=AccentBlue, >=stealth, line width=1.2pt}
 ]
 \node[box] (img)     {Cloth\\[-1pt]\scriptsize Image};
-\node[box, right=1.1cm of img]     (app)     {Mobile\\[-1pt]\scriptsize App};
-\node[box, right=1.1cm of app]     (gemini)  {Gemini\\[-1pt]\scriptsize API};
-\node[box, right=1.1cm of gemini]  (arduino) {Arduino\\[-1pt]\scriptsize WiFi R4};
-\node[box, right=1.1cm of arduino] (machine) {Washing\\[-1pt]\scriptsize Machine};
+\node[box, right=0.8cm of img]     (app)     {Mobile\\[-1pt]\scriptsize App};
+\node[box, right=0.8cm of app]     (gemini)  {Gemini\\[-1pt]\scriptsize API};
+\node[box, right=0.8cm of gemini]  (arduino) {Arduino\\[-1pt]\scriptsize WiFi R4};
+\node[box, right=0.8cm of arduino] (machine) {Washing\\[-1pt]\scriptsize Machine};
 
 \draw[arr] (img)     -- (app);
 \draw[arr] (app)     -- (gemini);
@@ -475,6 +476,7 @@ $a,\,b$: calibration coefficients
 
 % ------------------------------------------------------------------
 \begin{frame}{Detergent Dispenser Calibration}
+\vspace*{-0.2cm}
 \begin{columns}[T]
 \begin{column}{0.50\textwidth}
 \begin{tcolorbox}[mycard, title={\faTable\enspace Calibration Data}]
@@ -503,13 +505,13 @@ $a,\,b$: calibration coefficients
 \begin{column}{0.47\textwidth}
 \begin{tcolorbox}[accentcard, title={\faChartLine\enspace Linear Regression}]
 \centering
-\includegraphics[width=0.92\textwidth, height=0.30\textheight,
+\includegraphics[width=0.92\textwidth, height=0.20\textheight,
   keepaspectratio]{img/graph.png}
 \end{tcolorbox}
 
-\vspace{0.22cm}
+\vspace{0cm}
 \begin{tcolorbox}[mycard, title={\faCalculator\enspace Model Coefficients}]
-\centering\small\setlength{\tabcolsep}{5pt}
+\centering\scriptsize\setlength{\tabcolsep}{5pt}
 \rowcolors{2}{RowOdd}{RowEven}
 \begin{tabular}{lc}
 \rowcolor{HeaderRow}
@@ -622,8 +624,9 @@ $R^2$ value     & 0.997      \\
 
 % ------------------------------------------------------------------
 \begin{frame}{FastAPI Backend}
+\vspace*{-0.2cm}
 \textcolor{NavyBlue}{\textbf{Two independent microservices:}}
-\vspace{0.25cm}
+\vspace{0.1cm}
 
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
@@ -648,11 +651,11 @@ $R^2$ value     & 0.997      \\
 \end{tcolorbox}
 \end{column}
 \end{columns}
-\vspace{0.28cm}
+\vspace{0.1cm}
 \begin{tcolorbox}[infobar]
-\centering\small
+\centering\footnotesize
 \textbf{\textcolor{NavyBlue}{\faCode\enspace Tech Stack:}}
-Python,\ FastAPI,\ Pydantic,\ Pillow,\ Gemini API,\ OpenAPI
+Python, FastAPI, Pydantic, Pillow, Gemini API, OpenAPI
 \end{tcolorbox}
 \end{frame}
 
@@ -661,6 +664,7 @@ Python,\ FastAPI,\ Pydantic,\ Pillow,\ Gemini API,\ OpenAPI
 % ==================================================================
 
 \begin{frame}{Mobile App (React Native Expo)}
+\vspace*{-0.2cm}
 \begin{columns}[T]
 \begin{column}{0.34\textwidth}
 \begin{tcolorbox}[mycard, title={\faMobile*\enspace 5 Screens}]
@@ -686,9 +690,9 @@ Python,\ FastAPI,\ Pydantic,\ Pillow,\ Gemini API,\ OpenAPI
   \item Cross-platform (iOS \& Android)
 \end{itemize}
 \end{tcolorbox}
-\vspace{0.2cm}
+\vspace{0.05cm}
 \begin{tcolorbox}[infobar]
-\centering\small\textcolor{NavyBlue}{\faLink\enspace}
+\centering\footnotesize\textcolor{NavyBlue}{\faLink\enspace}
 App communicates with FastAPI backends via REST calls.
 \end{tcolorbox}
 \end{column}
