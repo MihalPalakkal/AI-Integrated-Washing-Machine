@@ -174,32 +174,6 @@
     % Full background
     \fill[NavyBlue] (current page.south west) rectangle (current page.north east);
 
-    % Subtle grid
-    \foreach \xi in {0,...,16}{
-      \draw[AccentBlue!18, line width=0.25pt]
-        ([xshift=\xi cm]current page.south west) -- ([xshift=\xi cm]current page.north west);
-    }
-    \foreach \yi in {0,...,9}{
-      \draw[AccentBlue!12, line width=0.25pt]
-        ([yshift=\yi cm]current page.south west) -- ([yshift=\yi cm]current page.south east);
-    }
-
-    % Decorative nodes on grid
-    \foreach \xi/\yi in {2/2, 5/5, 8/1, 11/7, 14/3, 4/8, 10/4}{
-      \fill[AccentBlue!50] ([xshift=\xi cm, yshift=\yi cm]current page.south west) circle (2.2pt);
-    }
-    % Circuit traces
-    \draw[AccentBlue!40, line width=0.9pt]
-      ([xshift=2cm, yshift=2cm]current page.south west) --
-      ([xshift=5cm, yshift=2cm]current page.south west) --
-      ([xshift=5cm, yshift=5cm]current page.south west) --
-      ([xshift=8cm, yshift=5cm]current page.south west);
-    \draw[AccentBlue!40, line width=0.9pt]
-      ([xshift=10cm, yshift=4cm]current page.south west) --
-      ([xshift=11cm, yshift=4cm]current page.south west) --
-      ([xshift=11cm, yshift=7cm]current page.south west) --
-      ([xshift=14cm, yshift=7cm]current page.south west);
-
     % Left accent strip
     \fill[AccentBlue]
       ([xshift=1.3cm]current page.south west) rectangle
@@ -231,7 +205,7 @@
 % ============================================================
 % METADATA
 % ============================================================
-\title{AI-Integrated Washing Machine}
+\title{AI-Integrated Fully Automatic Washing Machine}
 \subtitle{Mini Project Presentation}
 \author{
   Mihal Palakkal \quad Ruvais P \quad Mohamed Jaseeb P J \\
@@ -243,7 +217,7 @@
   \textbf{Guide:} Ms.~Amrutha S~Nair\quad
   \textbf{Coordinator:} Dr.~Sheena~S%
 }
-\date{\today}
+\date{March 16, 2026}
 
 % ============================================================
 \begin{document}
@@ -257,33 +231,6 @@
 
   % --- Background ---
   \fill[NavyBlue] (current page.south west) rectangle (current page.north east);
-
-  % --- Subtle grid ---
-  \foreach \xi in {0,...,16}{
-    \draw[AccentBlue!15, line width=0.2pt]
-      ([xshift=\xi cm]current page.south west) --
-      ([xshift=\xi cm]current page.north west);
-  }
-  \foreach \yi in {0,...,9}{
-    \draw[AccentBlue!10, line width=0.2pt]
-      ([yshift=\yi cm]current page.south west) --
-      ([yshift=\yi cm]current page.south east);
-  }
-
-  % --- Circuit traces ---
-  \foreach \xi/\yi in {1/1,3/4,7/6,9/2,13/5,15/3}{
-    \fill[AccentBlue!45] ([xshift=\xi cm,yshift=\yi cm]current page.south west) circle (2pt);
-  }
-  \draw[AccentBlue!35, line width=0.8pt]
-    ([xshift=1cm,  yshift=1cm]current page.south west) --
-    ([xshift=3cm,  yshift=1cm]current page.south west) --
-    ([xshift=3cm,  yshift=4cm]current page.south west) --
-    ([xshift=7cm,  yshift=4cm]current page.south west);
-  \draw[AccentBlue!35, line width=0.8pt]
-    ([xshift=9cm,  yshift=2cm]current page.south west) --
-    ([xshift=13cm, yshift=2cm]current page.south west) --
-    ([xshift=13cm, yshift=5cm]current page.south west) --
-    ([xshift=15cm, yshift=5cm]current page.south west);
 
   % --- Right panel ---
   \fill[NavyBlue!60]
@@ -301,43 +248,59 @@
     at ([xshift=13.7cm, yshift=4.8cm]current page.south west) {\faRobot};
 
   % --- Title area ---
+  \def\leftmargin{0.85cm}
+
   % Cyan accent bar
   \fill[AccentCyan]
-    ([xshift=0.75cm, yshift=3.3cm]current page.south west) rectangle
-    ([xshift=0.75cm+9.2cm, yshift=3.37cm]current page.south west);
+    ([xshift=\leftmargin, yshift=3.7cm]current page.south west) rectangle
+    ([xshift=\leftmargin+8.8cm, yshift=3.77cm]current page.south west);
 
   % Main title
-  \node[anchor=south west, text=white, font=\LARGE\bfseries,
+  \node[anchor=south west, text=white, font=\fontsize{32}{36}\selectfont\bfseries,
         text width=9.5cm, inner sep=0pt]
-    at ([xshift=0.75cm, yshift=3.4cm]current page.south west)
-    {AI-Integrated\\[2pt]Washing Machine};
+    at ([xshift=\leftmargin, yshift=4.85cm]current page.south west)
+    {AI-Integrated\\[2pt]Fully Automatic\\[4pt]Washing Machine};
 
   % Subtitle
-  \node[anchor=north west, text=AccentCyan, font=\normalsize\sffamily,
+  \node[anchor=north west, text=AccentCyan, font=\large\sffamily\bfseries,
         inner sep=0pt]
-    at ([xshift=0.75cm, yshift=3.28cm]current page.south west)
-    {Mini Project Presentation};
+    at ([xshift=\leftmargin, yshift=4.3cm]current page.south west)
+    {\faProjectDiagram\enspace Mini Project Presentation};
 
   % Authors
-  \node[anchor=north west, text=white!80, font=\footnotesize,
+  \node[anchor=north west, text=white, font=\small,
         text width=9.5cm, inner sep=0pt]
-    at ([xshift=0.75cm, yshift=2.75cm]current page.south west)
-    {Mihal Palakkal\enspace\textbullet\enspace
-     Ruvais P\enspace\textbullet\enspace
-     Mohamed Jaseeb P~J\\[2pt]
-     Sajad Hussain Malla\enspace\textbullet\enspace
-     Rishap Raj Chaudhary};
+    at ([xshift=\leftmargin, yshift=3.35cm]current page.south west)
+    {%
+      \textcolor{AccentCyan!80}{\textbullet}~\textbf{Mihal Palakkal}\quad
+      \textcolor{AccentCyan!80}{\textbullet}~\textbf{Ruvais P}\quad
+      \textcolor{AccentCyan!80}{\textbullet}~\textbf{Mohamed Jaseeb P J}\\[4pt]
+      \textcolor{AccentCyan!80}{\textbullet}~\textbf{Sajad Hussain Malla}\quad
+      \textcolor{AccentCyan!80}{\textbullet}~\textbf{Rishap Raj Chaudhary}%
+    };
 
-  % Institute + guide
-  \node[anchor=north west, text=white!55, font=\tiny, text width=9.5cm,
+  % Institute + divider
+  \draw[white!20, line width=0.5pt]
+    ([xshift=\leftmargin, yshift=2.15cm]current page.south west) --
+    ([xshift=\leftmargin+8.8cm, yshift=2.15cm]current page.south west);
+
+  % Institute
+  \node[anchor=north west, text=white!70, font=\scriptsize, text width=9.5cm,
         inner sep=0pt]
-    at ([xshift=0.75cm, yshift=1.85cm]current page.south west)
-    {Dept.\ of CSE, Cochin University of Science and Technology\\
-     Guide: Ms.~Amrutha S~Nair\quad Coordinator: Dr.~Sheena~S};
+    at ([xshift=\leftmargin, yshift=2.05cm]current page.south west)
+    {\faBuilding\enspace Dept.\ of Computer Science and Engineering\\
+     \faGraduationCap\enspace \textbf{Cochin University of Science and Technology}};
+
+  % Guide Section
+  \node[anchor=north west, text=AccentCyan!80, font=\footnotesize, text width=9.5cm,
+        inner sep=0pt]
+    at ([xshift=\leftmargin, yshift=1.3cm]current page.south west)
+    {\faUserTie\enspace \textbf{Guide:}\enspace Ms.\ Amrutha S Nair\hfill
+     \faUserTie\enspace \textbf{Coordinator:}\enspace Dr.\ Sheena S};
 
   % Date (bottom-right)
-  \node[anchor=south east, text=white!40, font=\tiny]
-    at ([xshift=-0.4cm, yshift=0.35cm]current page.south east) {\today};
+  \node[anchor=south east, text=white!35, font=\tiny\sffamily]
+    at ([xshift=-0.5cm, yshift=0.35cm]current page.south east) {March 16, 2026};
 
 \end{tikzpicture}
 \end{frame}
@@ -829,17 +792,6 @@ Successfully converted a semi-automatic machine into an
 
   \fill[NavyBlue] (current page.south west) rectangle (current page.north east);
 
-  \foreach \xi in {0,...,16}{
-    \draw[AccentBlue!14, line width=0.2pt]
-      ([xshift=\xi cm]current page.south west) --
-      ([xshift=\xi cm]current page.north west);
-  }
-  \foreach \yi in {0,...,9}{
-    \draw[AccentBlue!10, line width=0.2pt]
-      ([yshift=\yi cm]current page.south west) --
-      ([yshift=\yi cm]current page.south east);
-  }
-
   % Outer glow circle
   \fill[AccentBlue!25] (current page.center) circle (3.8cm);
   % Inner ring
@@ -859,7 +811,7 @@ Successfully converted a semi-automatic machine into an
   % Bottom credit
   \node[text=AccentBlue!60, font=\tiny]
     at ([yshift=0.35cm]current page.south)
-    {AI-Integrated Washing Machine \textbullet{} CUSAT \textbullet{} \today};
+    {AI-Integrated Fully Automatic Washing Machine \textbullet{} CUSAT \textbullet{} March 16, 2026};
 
 \end{tikzpicture}
 \end{frame}
