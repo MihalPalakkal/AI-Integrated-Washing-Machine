@@ -1,0 +1,22 @@
+.env
+*.pptx
+generate_ppt.py
+
+# Python
+__pycache__/
+*.pyc
+
+# Env
+.env
+
+# Logs
+*.log
+
+# Expo / React Native
+.expo/
+
+# Node
+node_modules/
+
+# Backups
+*.bak
