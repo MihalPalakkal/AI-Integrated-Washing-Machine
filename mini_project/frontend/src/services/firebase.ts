@@ -3,14 +3,14 @@ import { getDatabase, ref, set, push, get, onValue, remove, query, orderByChild,
 
 // Firebase Web App Config
 const firebaseConfig = {
-  apiKey: "AIzaSyCTOJauLTZGF825ZeuiyjQqdXYn6wZpZIE",
-  authDomain: "ai-washing-machine.firebaseapp.com",
-  databaseURL: "https://ai-washing-machine-default-rtdb.asia-southeast1.firebasedatabase.app",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
   projectId: "ai-washing-machine",
-  storageBucket: "ai-washing-machine.firebasestorage.app",
-  messagingSenderId: "204106397438",
-  appId: "1:204106397438:web:2548a49744679365a797af",
-  measurementId: "G-1EKJ8K9CC7"
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
